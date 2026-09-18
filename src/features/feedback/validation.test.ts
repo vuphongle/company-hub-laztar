@@ -10,6 +10,7 @@ describe("validateFeedbackFields", () => {
     const result = validateFeedbackFields({
       type: "bug",
       appId: "office-jukebox",
+      title: "Không thêm được bài hát",
       content: "  Bai hat moi khong duoc them vao hang doi.  ",
       website: "",
     });
@@ -18,7 +19,8 @@ describe("validateFeedbackFields", () => {
       success: true,
       data: {
         type: "bug",
-        app_id: "office-jukebox",
+        appSlug: "office-jukebox",
+        title: "Không thêm được bài hát",
         content: "Bai hat moi khong duoc them vao hang doi.",
       },
     });
@@ -28,27 +30,34 @@ describe("validateFeedbackFields", () => {
     const result = validateFeedbackFields({
       type: "idea",
       appId: "",
+      title: "Khu vực tài liệu nội bộ",
       content: "Company Hub nen co them khu vuc tong hop tai lieu noi bo.",
       website: "",
     });
 
     expect(result).toMatchObject({
       success: true,
-      data: { app_id: null },
+      data: { appSlug: null },
     });
   });
 
-  it("rejects invalid types, unknown apps, and short content", () => {
+  it("rejects invalid types, unknown apps, short titles, and short content", () => {
     const result = validateFeedbackFields({
       type: "complaint",
       appId: "unknown-app",
+      title: "N",
       content: "Qua ngan",
       website: "",
     });
 
     expect(result.success).toBe(false);
     if (!result.success) {
-      expect(Object.keys(result.errors).sort()).toEqual(["appId", "content", "type"]);
+      expect(Object.keys(result.errors).sort()).toEqual([
+        "appId",
+        "content",
+        "title",
+        "type",
+      ]);
     }
   });
 
@@ -56,6 +65,7 @@ describe("validateFeedbackFields", () => {
     const result = validateFeedbackFields({
       type: "bug",
       appId: "ma-soi",
+      title: "Feedback từ bot",
       content: "Noi dung nay du dai nhung den tu mot bot tu dong.",
       website: "https://spam.example.com",
     });

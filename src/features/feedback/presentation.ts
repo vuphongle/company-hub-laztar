@@ -15,12 +15,12 @@ export const feedbackStatusLabels: Record<FeedbackStatus, string> = {
   done: "Done",
 };
 
-export function getFeedbackAppName(appId: string | null) {
-  if (!appId) return "Company Hub / Chung";
-  return getAppById(appId)?.name ?? appId;
+export function getFeedbackAppName(appSlug: string | null) {
+  if (!appSlug) return "Company Hub / Chung";
+  return getAppById(appSlug)?.name ?? appSlug;
 }
 
-export function formatFeedbackDate(value: string) {
+export function formatFeedbackDate(value: string | Date) {
   return new Intl.DateTimeFormat("vi-VN", {
     dateStyle: "medium",
     timeStyle: "short",

@@ -53,15 +53,16 @@ export function FeedbackList({
                   <tr key={item.id}>
                     <td>
                       <span className="type-label">{feedbackTypeLabels[item.type]}</span>
-                      <strong>{feedbackExcerpt(item.content)}</strong>
+                      <strong>{item.title}</strong>
+                      <small>{feedbackExcerpt(item.content)}</small>
                     </td>
-                    <td>{getFeedbackAppName(item.app_id)}</td>
+                    <td>{getFeedbackAppName(item.appSlug)}</td>
                     <td>
                       <span className={`status-badge status-${item.status}`}>
                         {feedbackStatusLabels[item.status]}
                       </span>
                     </td>
-                    <td>{formatFeedbackDate(item.created_at)}</td>
+                    <td>{formatFeedbackDate(item.createdAt)}</td>
                     <td>
                       <Link className="table-link" href={`${detailsBasePath}/${item.id}`}>
                         Xem chi tiết
@@ -82,15 +83,18 @@ export function FeedbackList({
                     {feedbackStatusLabels[item.status]}
                   </span>
                 </div>
-                <h3>{feedbackExcerpt(item.content, 150)}</h3>
+                <h3>{item.title}</h3>
+                <p className="admin-feedback-excerpt">
+                  {feedbackExcerpt(item.content, 150)}
+                </p>
                 <dl>
                   <div>
                     <dt>App</dt>
-                    <dd>{getFeedbackAppName(item.app_id)}</dd>
+                    <dd>{getFeedbackAppName(item.appSlug)}</dd>
                   </div>
                   <div>
                     <dt>Ngày gửi</dt>
-                    <dd>{formatFeedbackDate(item.created_at)}</dd>
+                    <dd>{formatFeedbackDate(item.createdAt)}</dd>
                   </div>
                 </dl>
                 <Link className="button button-secondary" href={`${detailsBasePath}/${item.id}`}>

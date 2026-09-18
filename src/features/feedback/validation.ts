@@ -11,12 +11,13 @@ import {
 type FeedbackFields = {
   type: unknown;
   appId: unknown;
+  title: unknown;
   content: unknown;
   website: unknown;
 };
 
 export type FeedbackFieldErrors = Partial<
-  Record<"form" | "type" | "appId" | "content", string>
+  Record<"form" | "type" | "appId" | "title" | "content", string>
 >;
 
 type FeedbackValidationResult =
@@ -29,6 +30,8 @@ type StatusValidationResult =
 
 const MIN_CONTENT_LENGTH = 20;
 const MAX_CONTENT_LENGTH = 5000;
+const MIN_TITLE_LENGTH = 4;
+const MAX_TITLE_LENGTH = 120;
 
 function isFeedbackType(value: string): value is FeedbackType {
   return feedbackTypes.includes(value as FeedbackType);
@@ -39,6 +42,7 @@ export function validateFeedbackFields(
 ): FeedbackValidationResult {
   const type = typeof fields.type === "string" ? fields.type : "";
   const appId = typeof fields.appId === "string" ? fields.appId : "";
+  const title = typeof fields.title === "string" ? fields.title.trim() : "";
   const content = typeof fields.content === "string" ? fields.content.trim() : "";
   const website = typeof fields.website === "string" ? fields.website.trim() : "";
 
@@ -59,6 +63,12 @@ export function validateFeedbackFields(
     errors.appId = "App được chọn không tồn tại.";
   }
 
+  if (title.length < MIN_TITLE_LENGTH) {
+    errors.title = "Tiêu đề cần có ít nhất 4 ký tự.";
+  } else if (title.length > MAX_TITLE_LENGTH) {
+    errors.title = "Tiêu đề không được vượt quá 120 ký tự.";
+  }
+
   if (content.length < MIN_CONTENT_LENGTH) {
     errors.content = "Nội dung cần có ít nhất 20 ký tự.";
   } else if (content.length > MAX_CONTENT_LENGTH) {
@@ -73,7 +83,8 @@ export function validateFeedbackFields(
     success: true,
     data: {
       type: type as FeedbackType,
-      app_id: appId || null,
+      appSlug: appId || null,
+      title,
       content,
     },
   };

@@ -13,11 +13,12 @@ export type FeedbackStatus = (typeof feedbackStatuses)[number];
 export type Feedback = {
   id: string;
   type: FeedbackType;
-  app_id: string | null;
+  appSlug: string | null;
+  title: string;
   content: string;
   status: FeedbackStatus;
-  created_at: string;
-  updated_at: string;
+  createdAt: Date;
+  updatedAt: Date;
 };
 
-export type FeedbackInput = Pick<Feedback, "type" | "app_id" | "content">;
+export type FeedbackInput = Pick<Feedback, "type" | "appSlug" | "title" | "content">;

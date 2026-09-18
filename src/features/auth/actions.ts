@@ -2,8 +2,9 @@
 
 import { redirect } from "next/navigation";
 
-import { getPublicSupabaseConfig } from "@/lib/supabase/config";
-import { createServerSupabaseClient } from "@/lib/supabase/server";
+import { findAdminByEmail } from "./data";
+import { verifyAdminPassword } from "./password";
+import { createAdminSession, deleteAdminSession } from "./session";
 
 export type LoginFormState = {
   error?: string;
@@ -13,47 +14,23 @@ export async function signIn(
   _previousState: LoginFormState,
   formData: FormData,
 ): Promise<LoginFormState> {
-  if (!getPublicSupabaseConfig()) {
-    return { error: "Supabase chưa được cấu hình cho môi trường này." };
-  }
-
-  const email = String(formData.get("email") ?? "").trim();
+  const email = String(formData.get("email") ?? "").trim().toLowerCase();
   const password = String(formData.get("password") ?? "");
 
   if (!email || !password) {
     return { error: "Hãy nhập đầy đủ email và mật khẩu." };
   }
 
-  const supabase = await createServerSupabaseClient();
-  const { error } = await supabase.auth.signInWithPassword({ email, password });
-
-  if (error) {
+  const admin = findAdminByEmail(email);
+  if (!admin || !(await verifyAdminPassword(admin.passwordHash, password))) {
     return { error: "Email hoặc mật khẩu không đúng." };
   }
 
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
-
-  const { data: admin } = await supabase
-    .from("admin_users")
-    .select("user_id")
-    .eq("user_id", user?.id ?? "")
-    .maybeSingle();
-
-  if (!admin) {
-    await supabase.auth.signOut();
-    return { error: "Tài khoản này không có quyền admin." };
-  }
-
+  await createAdminSession(admin.id);
   redirect("/admin");
 }
 
 export async function signOut() {
-  if (getPublicSupabaseConfig()) {
-    const supabase = await createServerSupabaseClient();
-    await supabase.auth.signOut();
-  }
-
+  await deleteAdminSession();
   redirect("/admin/login");
 }

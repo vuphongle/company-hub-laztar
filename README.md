@@ -1,62 +1,120 @@
 # Company Hub
 
-Company Hub là cổng nội bộ nhỏ gọn để nhân viên mở các app của công ty từ một URL, gửi feedback và để admin theo dõi feedback trong một workflow đơn giản.
+Company Hub là cổng nội bộ để nhân viên mở các app của công ty từ một URL, gửi feedback và để admin quản lý feedback trong một workflow gọn nhẹ.
 
 ## Tính năng V1
 
 - App directory data-driven, tìm theo tên và lọc theo category.
 - Dữ liệu demo cho Ma Sói, Office Jukebox và Sao Kê.
 - Public feedback cho Bug, Feature Request, Idea và Contribution.
-- Feedback lưu trong Supabase PostgreSQL.
-- `/admin` dùng Supabase Auth và bảng allowlist `admin_users`.
+- Feedback được validate phía server và lưu trong SQLite.
+- `/admin` đăng nhập bằng email/password, dùng session server-side.
 - Admin xem danh sách, chi tiết và đổi trạng thái New / In Progress / Done.
 - Responsive riêng cho mobile admin cards và desktop table.
 
 ## Stack
 
 - Next.js 16 App Router, React 19, TypeScript
-- Supabase Auth + PostgreSQL + Row Level Security
+- SQLite, Drizzle ORM và Drizzle migrations
+- Argon2id cho password hash, opaque database session cho admin
 - CSS thuần với semantic design tokens
 - Vitest + ESLint
 
-## Chạy local
+## Local Development
 
-Yêu cầu Node.js `20.9.0` trở lên.
+### 1. Requirements
+
+- Node.js `20.9.0` trở lên
+- npm
+
+Không cần database hoặc authentication service bên ngoài.
+
+### 2. Install và cấu hình environment
 
 ```bash
 npm install
 cp .env.example .env.local
+```
+
+Các biến cần thiết:
+
+```dotenv
+# Application
+PORT=3000
+
+# SQLite database. Có thể dùng đường dẫn tương đối hoặc tuyệt đối.
+DATABASE_URL=file:./data/company-hub.db
+```
+
+`DATABASE_URL` chỉ được đọc ở server. File database local, WAL và các file `.env*` (trừ `.env.example`) đều được ignore khỏi Git.
+
+Không cần `SESSION_SECRET`: session dùng token ngẫu nhiên, browser chỉ giữ token trong cookie `HttpOnly`, còn database chỉ lưu SHA-256 hash của token.
+
+### 3. Tạo database từ migration
+
+```bash
+npm run db:migrate
+```
+
+Lệnh này tạo database và toàn bộ bảng `feedback`, `admin_users`, `admin_sessions` từ migration đã commit. Có thể chạy lại sau khi xóa database local để dựng môi trường sạch mà không cần chạy SQL thủ công.
+
+### 4. Tạo admin đầu tiên
+
+```bash
+npm run admin:create
+```
+
+Nhập email và password tối thiểu 12 ký tự khi được hỏi. Password được nhập ẩn, hash bằng Argon2id rồi mới lưu; repository không có admin hoặc password mặc định. Nếu email đã tồn tại, script sẽ dừng với thông báo rõ ràng.
+
+### 5. Chạy ứng dụng
+
+```bash
 npm run dev
 ```
 
-Mở `http://localhost:3000`. Home và UI feedback vẫn xem được khi chưa cấu hình Supabase; thao tác lưu và khu vực admin cần cấu hình đầy đủ.
+Mở `http://localhost:<PORT>` với giá trị `PORT` đang cấu hình.
 
-## Cấu hình Supabase
-
-1. Tạo một Supabase project.
-2. Mở SQL Editor và chạy `supabase/migrations/001_company_hub.sql`.
-3. Điền các biến sau vào `.env.local`:
+Để đổi port, chỉ cần sửa `.env.local` rồi chạy lại app:
 
 ```dotenv
-NEXT_PUBLIC_SUPABASE_URL=https://your-project.supabase.co
-NEXT_PUBLIC_SUPABASE_ANON_KEY=your-anon-key
-SUPABASE_SERVICE_ROLE_KEY=your-service-role-key
+PORT=3105
 ```
 
-`SUPABASE_SERVICE_ROLE_KEY` chỉ được dùng trong server-only data module. Không đưa key này vào biến có prefix `NEXT_PUBLIC_`.
+`npm run dev` và `npm run start` đều đọc `PORT` qua cùng runtime runner; không cần sửa source hoặc package scripts.
 
-## Tạo admin đầu tiên
+### 6. Dừng local
 
-1. Trong Supabase Dashboard, tạo user email/password tại Authentication → Users.
-2. Lấy UUID của user.
-3. Chạy SQL sau trong SQL Editor:
+Nhấn `Ctrl+C` tại terminal đang chạy Next.js. SQLite không có service riêng cần dừng.
 
-```sql
-insert into public.admin_users (user_id)
-values ('USER_UUID_HERE');
+## Database Commands
+
+```bash
+npm run db:generate  # tạo migration mới sau khi thay schema
+npm run db:migrate   # áp dụng migration vào DATABASE_URL hiện tại
+npm run db:studio    # mở Drizzle Studio cho database hiện tại
 ```
 
-Sau đó đăng nhập tại `/admin/login`. Một tài khoản Auth không có record tương ứng trong `admin_users` sẽ bị từ chối.
+Không chạy `db:generate` cho setup thông thường; migration hiện có đã đủ để dựng database sạch.
+
+## Production Runtime
+
+Phase này chưa deploy production. Khi triển khai lên VPS, đặt database ngoài source/build directory và bảo đảm process có quyền đọc/ghi thư mục đó, ví dụ:
+
+```dotenv
+PORT=3100
+DATABASE_URL=file:/var/lib/company-hub/company-hub.db
+```
+
+Sau đó chạy migration trước khi khởi động production runtime:
+
+```bash
+npm ci
+npm run build
+npm run db:migrate
+npm run start
+```
+
+Không hard-code port hoặc database path trong source, nên cùng VPS có thể chạy nhiều service với cấu hình riêng.
 
 ## Thêm app mới
 
@@ -74,7 +132,7 @@ Mở `src/data/apps.ts` và thêm một object vào mảng `apps`:
 }
 ```
 
-UI, search, filter và dropdown chọn project trong form feedback sẽ tự đọc từ nguồn dữ liệu này. Nếu cần icon/category mới, mở rộng union tương ứng trong cùng file và mapping icon trong `src/components/app-directory.tsx`.
+UI, search, filter và dropdown chọn project trong form feedback tự đọc từ nguồn dữ liệu này. Nếu cần icon/category mới, mở rộng union trong cùng file và mapping icon tại `src/components/app-directory.tsx`.
 
 ## Kiểm tra chất lượng
 
@@ -85,6 +143,10 @@ npm test
 npm run build
 ```
 
-## Deploy
+Với application đang chạy bằng `npm run dev` hoặc `npm run start`, chạy thêm:
 
-Vercel + Supabase là đường deploy đơn giản nhất: import repository vào Vercel, thêm ba environment variables, deploy, rồi thay các URL demo trong `src/data/apps.ts` bằng URL thật của công ty.
+```bash
+npm run test:integration
+```
+
+Integration check tự tạo rồi dọn admin/feedback tạm để xác minh public submit, login, session cookie, protected admin reads và SQLite status persistence.

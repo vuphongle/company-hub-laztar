@@ -26,7 +26,7 @@ export function FeedbackDetail({
       <div className="detail-heading">
         <div>
           <p className="eyebrow">{feedbackTypeLabels[feedback.type]}</p>
-          <h1>Chi tiết feedback</h1>
+          <h1>{feedback.title}</h1>
         </div>
         <span className={`status-badge status-${feedback.status}`}>
           {feedbackStatusLabels[feedback.status]}
@@ -38,11 +38,11 @@ export function FeedbackDetail({
           <dl className="feedback-meta">
             <div>
               <dt>App / project</dt>
-              <dd>{getFeedbackAppName(feedback.app_id)}</dd>
+              <dd>{getFeedbackAppName(feedback.appSlug)}</dd>
             </div>
             <div>
               <dt>Ngày gửi</dt>
-              <dd>{formatFeedbackDate(feedback.created_at)}</dd>
+              <dd>{formatFeedbackDate(feedback.createdAt)}</dd>
             </div>
             <div>
               <dt>Mã feedback</dt>

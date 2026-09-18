@@ -23,6 +23,11 @@ next-env.d.ts
 # coverage
 /coverage
 
+# local SQLite databases
+*.db
+*.db-shm
+*.db-wal
+
 # local AI and design tooling
 /.agents/
 /design-system/

@@ -18,6 +18,7 @@ export async function submitFeedback(
   const result = validateFeedbackFields({
     type: formData.get("type"),
     appId: formData.get("appId"),
+    title: formData.get("title"),
     content: formData.get("content"),
     website: formData.get("website"),
   });

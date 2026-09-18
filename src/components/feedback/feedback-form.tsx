@@ -152,6 +152,30 @@ export function FeedbackForm() {
       </div>
 
       <div className="form-field">
+        <label htmlFor="title">
+          Tiêu đề <span aria-hidden="true">*</span>
+        </label>
+        <input
+          id="title"
+          name="title"
+          type="text"
+          minLength={4}
+          maxLength={120}
+          required
+          aria-describedby="title-help title-error"
+          placeholder="Tóm tắt feedback trong một câu ngắn"
+        />
+        <p className="field-help" id="title-help">
+          Từ 4 đến 120 ký tự.
+        </p>
+        {state.errors.title && (
+          <p className="field-error" id="title-error" role="alert">
+            {state.errors.title}
+          </p>
+        )}
+      </div>
+
+      <div className="form-field">
         <label htmlFor="content">
           Nội dung <span aria-hidden="true">*</span>
         </label>

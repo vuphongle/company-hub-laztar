@@ -1199,6 +1199,14 @@ main {
   overflow-wrap: anywhere;
 }
 
+.admin-table td:first-child small {
+  display: block;
+  margin-top: 0.35rem;
+  color: var(--color-muted);
+  line-height: 1.45;
+  overflow-wrap: anywhere;
+}
+
 .admin-card-list {
   display: grid;
   gap: 1rem;
@@ -1214,10 +1222,16 @@ main {
 }
 
 .admin-feedback-card h3 {
-  margin-block: 1rem;
+  margin-block: 1rem 0.35rem;
   font-family: var(--font-body);
   font-size: 1.05rem;
   line-height: 1.5;
+  overflow-wrap: anywhere;
+}
+
+.admin-feedback-excerpt {
+  margin-bottom: 1rem;
+  color: var(--color-muted);
   overflow-wrap: anywhere;
 }
 
