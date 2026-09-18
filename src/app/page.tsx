@@ -11,19 +11,19 @@ export default function HomePage() {
           <div className="hero-copy reveal">
             <p className="hero-kicker">
               <span aria-hidden="true" />
-              Internal tools, without the treasure hunt
+              Internal playground
             </p>
-            <h1>Một nơi để bắt đầu mọi thứ trong công ty.</h1>
+            <h1>LAZTAR Hub</h1>
             <p className="hero-description">
-              Nhớ một URL duy nhất để mở app, khám phá công cụ mới và gửi ý tưởng
-              giúp mọi thứ tốt hơn.
+              Chơi một chút. Build một chút. Góp ý một chút.
+              <span> Nơi những project nội bộ được dùng, thử và làm tốt hơn cùng nhau.</span>
             </p>
             <div className="hero-actions">
               <a className="button button-primary" href="#directory-title">
                 Khám phá ứng dụng
               </a>
               <Link className="button button-secondary" href="/feedback">
-                Gửi feedback
+                Góp ý hoặc tham gia
               </Link>
             </div>
           </div>
@@ -56,11 +56,12 @@ export default function HomePage() {
       <section className="feedback-cta">
         <div className="shell feedback-cta-card">
           <div>
-            <p className="eyebrow">Có gì chưa ổn?</p>
-            <h2>Một bug nhỏ hay một ý tưởng lớn đều đáng được lắng nghe.</h2>
+            <p className="eyebrow">Cùng làm cho Hub hay hơn</p>
+            <h2>Đây là project của mọi người. Có idea thì góp vào.</h2>
+            <p className="feedback-cta-copy">Báo lỗi, đề xuất feature, ném vào một idea hay nói với team rằng bạn muốn tham gia.</p>
           </div>
           <Link className="button button-dark" href="/feedback">
-            Chia sẻ với team
+            Góp một ý
           </Link>
         </div>
       </section>

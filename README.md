@@ -1,11 +1,11 @@
-# Company Hub
+# LAZTAR Hub
 
-Company Hub là cổng nội bộ để nhân viên mở các app của công ty từ một URL, gửi feedback và để admin quản lý feedback trong một workflow gọn nhẹ.
+LAZTAR Hub là internal playground để nhân viên khám phá project, dùng tool, góp ý và tham gia đóng góp trong một workflow gọn nhẹ.
 
 ## Tính năng V1
 
 - App directory data-driven, tìm theo tên và lọc theo category.
-- Dữ liệu demo cho Ma Sói, Office Jukebox và Sao Kê.
+- Directory dùng dữ liệu live cho Ma Sói, Office Jukebox và Sao kê.
 - Public feedback cho Bug, Feature Request, Idea và Contribution.
 - Feedback được validate phía server và lưu trong SQLite.
 - `/admin` đăng nhập bằng email/password, dùng session server-side.
@@ -127,7 +127,7 @@ Mở `src/data/apps.ts` và thêm một object vào mảng `apps`:
   description: "Mô tả ngắn giúp nhân viên hiểu app dùng để làm gì.",
   url: "https://project.company.example",
   icon: "receipt",
-  category: "Productivity",
+  category: "Game",
   status: "live",
 }
 ```

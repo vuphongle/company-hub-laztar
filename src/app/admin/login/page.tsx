@@ -22,7 +22,7 @@ export default async function AdminLoginPage() {
           <h1>Quản lý feedback gọn gàng, không cần một dashboard khổng lồ.</h1>
           <p>Chỉ tài khoản đã được thêm vào danh sách admin mới có thể truy cập.</p>
           <Link className="text-link" href="/">
-            ← Quay lại Company Hub
+            ← Quay lại LAZTAR Hub
           </Link>
         </div>
 

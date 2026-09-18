@@ -16,7 +16,7 @@ export const feedbackStatusLabels: Record<FeedbackStatus, string> = {
 };
 
 export function getFeedbackAppName(appSlug: string | null) {
-  if (!appSlug) return "Company Hub / Chung";
+  if (!appSlug) return "LAZTAR Hub / Chung";
   return getAppById(appSlug)?.name ?? appSlug;
 }
 

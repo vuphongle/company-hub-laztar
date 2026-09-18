@@ -3,6 +3,7 @@
 import {
   ArrowUpRight,
   GameController,
+  GithubLogo,
   MagnifyingGlass,
   MusicNotes,
   Receipt,
@@ -31,8 +32,8 @@ function AppGlyph({ name }: { name: AppIconName }) {
 }
 
 function AppCard({ app }: { app: CompanyApp }) {
-  const content = (
-    <>
+  return (
+    <article className={`app-card app-card-${app.icon}`}>
       <div className="app-card-topline">
         <span className={`app-icon app-icon-${app.icon}`}>
           <AppGlyph name={app.icon} />
@@ -46,25 +47,31 @@ function AppCard({ app }: { app: CompanyApp }) {
         <h3>{app.name}</h3>
         <p>{app.description}</p>
       </div>
-      <span className="app-card-action">
-        {app.status === "coming_soon" ? "Chưa thể truy cập" : "Mở ứng dụng"}
-        {app.status !== "coming_soon" && <ArrowUpRight size={18} aria-hidden="true" />}
-      </span>
-    </>
-  );
-
-  if (app.status === "coming_soon") {
-    return (
-      <article className="app-card app-card-disabled">
-        {content}
-      </article>
-    );
-  }
-
-  return (
-    <a className="app-card" href={app.url} target="_blank" rel="noreferrer">
-      {content}
-    </a>
+      <div className="app-card-actions">
+        <a
+          className="button button-primary app-open-button"
+          href={app.url}
+          target="_blank"
+          rel="noreferrer"
+          aria-label={`Mở ${app.name} trong tab mới`}
+        >
+          Mở app
+          <ArrowUpRight size={18} aria-hidden="true" />
+        </a>
+        {app.githubUrl && (
+          <a
+            className="app-github-link"
+            href={app.githubUrl}
+            target="_blank"
+            rel="noreferrer"
+            aria-label={`Xem repository GitHub của ${app.name} trong tab mới`}
+          >
+            <GithubLogo size={18} weight="bold" aria-hidden="true" />
+            GitHub
+          </a>
+        )}
+      </div>
+    </article>
   );
 }
 
@@ -91,9 +98,9 @@ export function AppDirectory({ apps }: { apps: CompanyApp[] }) {
       <div className="section-heading">
         <div>
           <p className="eyebrow">App directory</p>
-          <h2 id="directory-title">Bạn muốn đi đâu hôm nay?</h2>
+          <h2 id="directory-title">Hôm nay mình build gì, chơi gì?</h2>
         </div>
-        <p>Tìm nhanh công cụ theo tên hoặc nhóm sử dụng.</p>
+        <p>Những project nội bộ để mở ra, thử nghiệm và cùng làm tốt hơn.</p>
       </div>
 
       <div className="directory-controls">
@@ -104,7 +111,7 @@ export function AppDirectory({ apps }: { apps: CompanyApp[] }) {
             type="search"
             value={query}
             onChange={(event) => setQuery(event.target.value)}
-            placeholder="Tìm Ma Sói, Music, Finance..."
+            placeholder="Tìm Ma Sói, Jukebox, Sao kê..."
           />
         </label>
 
@@ -132,7 +139,7 @@ export function AppDirectory({ apps }: { apps: CompanyApp[] }) {
       </div>
 
       <p className="results-count" aria-live="polite">
-        {filteredApps.length} ứng dụng phù hợp
+        {filteredApps.length} project phù hợp
       </p>
 
       {filteredApps.length > 0 ? (

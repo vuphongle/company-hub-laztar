@@ -9,10 +9,10 @@ import "./globals.css";
 
 export const metadata: Metadata = {
   title: {
-    default: "Company Hub",
-    template: "%s | Company Hub",
+    default: "LAZTAR Hub",
+    template: "%s | LAZTAR Hub",
   },
-  description: "Một điểm đến cho các app và ý tưởng trong công ty.",
+  description: "Internal playground cho các app, ý tưởng và contribution của LAZTAR.",
 };
 
 export const viewport: Viewport = {

@@ -1,24 +1,24 @@
 :root {
-  --color-primary: #f97316;
-  --color-primary-strong: #c2410c;
-  --color-primary-soft: #ffedd5;
-  --color-accent: #2563eb;
-  --color-accent-strong: #1d4ed8;
-  --color-accent-soft: #dbeafe;
-  --color-background: #fff8ef;
+  --color-primary: #f3b022;
+  --color-primary-strong: #98530c;
+  --color-primary-soft: #fff1cf;
+  --color-accent: #1a2654;
+  --color-accent-strong: #101936;
+  --color-accent-soft: #e6eaf7;
+  --color-background: #fffaf0;
   --color-surface: #ffffff;
-  --color-surface-soft: #fff3e4;
-  --color-ink: #172033;
-  --color-muted: #566176;
-  --color-border: #f3d3b5;
-  --color-border-strong: #e7b98e;
+  --color-surface-soft: #fff4da;
+  --color-ink: #101936;
+  --color-muted: #5f667b;
+  --color-border: #ead8b8;
+  --color-border-strong: #d9bd87;
   --color-success: #16794a;
   --color-success-soft: #dcfce7;
   --color-danger: #b42318;
   --color-danger-soft: #fef3f2;
   --color-ring: #172033;
-  --shadow-card: 0 10px 0 rgba(122, 67, 24, 0.08), 0 18px 40px rgba(73, 40, 14, 0.08);
-  --shadow-hover: 0 7px 0 rgba(122, 67, 24, 0.1), 0 22px 48px rgba(73, 40, 14, 0.12);
+  --shadow-card: 0 10px 0 rgba(72, 55, 25, 0.07), 0 18px 40px rgba(36, 28, 14, 0.08);
+  --shadow-hover: 0 7px 0 rgba(72, 55, 25, 0.09), 0 22px 48px rgba(36, 28, 14, 0.12);
   --radius-sm: 10px;
   --radius-md: 16px;
   --radius-lg: 24px;
@@ -46,7 +46,7 @@ html {
 body {
   margin: 0;
   background:
-    radial-gradient(circle at 12% 8%, rgba(249, 115, 22, 0.12), transparent 24rem),
+    radial-gradient(circle at 12% 8%, rgba(243, 176, 34, 0.14), transparent 24rem),
     linear-gradient(180deg, #fffaf4 0%, var(--color-background) 100%);
   color: var(--color-ink);
   font-family: var(--font-body);
@@ -194,22 +194,6 @@ main {
   text-decoration: none;
 }
 
-.brand-mark {
-  width: 2.75rem;
-  height: 2.75rem;
-  flex: 0 0 auto;
-  display: grid;
-  place-items: center;
-  border: 2px solid var(--color-ink);
-  border-radius: 14px;
-  background: var(--color-primary);
-  box-shadow: 3px 3px 0 var(--color-ink);
-  color: var(--color-ink);
-  font-family: var(--font-heading);
-  font-weight: 700;
-  line-height: 1;
-}
-
 .brand-copy {
   min-width: 0;
   display: grid;
@@ -218,7 +202,14 @@ main {
 
 .brand-copy strong {
   font-family: var(--font-heading);
-  font-size: 1.05rem;
+  color: var(--color-accent);
+  font-size: 1.2rem;
+  letter-spacing: -0.03em;
+}
+
+.brand-copy em {
+  color: var(--color-primary-strong);
+  font-style: normal;
 }
 
 .brand-copy small {
@@ -303,6 +294,8 @@ main {
 .hero-copy h1 {
   max-width: 13ch;
   margin-bottom: 1.5rem;
+  color: var(--color-accent);
+  font-size: clamp(3.25rem, 8vw, 4.75rem);
 }
 
 .hero-description {
@@ -310,6 +303,12 @@ main {
   margin-bottom: 2rem;
   color: var(--color-muted);
   font-size: clamp(1.05rem, 3vw, 1.3rem);
+}
+
+.hero-description span {
+  display: block;
+  margin-top: 0.5rem;
+  font-size: 0.9em;
 }
 
 .hero-actions,
@@ -354,7 +353,7 @@ main {
 .button-primary {
   background: var(--color-accent);
   border-color: var(--color-accent);
-  box-shadow: 0 4px 0 #153e9c;
+  box-shadow: 0 4px 0 #080d21;
   color: white;
 }
 
@@ -622,7 +621,6 @@ main {
   border-radius: var(--radius-lg);
   background: var(--color-surface);
   box-shadow: var(--shadow-card);
-  text-decoration: none;
   transition: transform 200ms ease, box-shadow 200ms ease, border-color 200ms ease;
 }
 
@@ -632,14 +630,16 @@ main {
   box-shadow: var(--shadow-hover);
 }
 
-.app-card-disabled {
-  cursor: not-allowed;
-  opacity: 0.68;
+.app-card-wolf {
+  background: linear-gradient(145deg, #fffdf8 0%, #fff5e5 100%);
 }
 
-.app-card-disabled:hover {
-  transform: none;
-  box-shadow: var(--shadow-card);
+.app-card-music {
+  background: linear-gradient(145deg, #ffffff 0%, #edf4ff 100%);
+}
+
+.app-card-receipt {
+  background: linear-gradient(145deg, #fffdf8 0%, #f4fce8 100%);
 }
 
 .app-card-topline,
@@ -692,16 +692,30 @@ main {
   color: var(--color-muted);
 }
 
-.app-card-action {
+.app-card-actions {
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  flex-wrap: wrap;
   gap: 0.75rem;
   margin-top: auto;
   padding-top: 1rem;
   border-top: 1px solid var(--color-border);
-  color: var(--color-accent-strong);
+}
+
+.app-open-button {
+  min-width: 9rem;
+}
+
+.app-github-link {
+  min-height: 2.875rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  padding: 0.5rem 0.2rem;
+  color: var(--color-accent);
   font-weight: 900;
+  text-decoration-thickness: 2px;
+  text-underline-offset: 3px;
 }
 
 .status-badge,
@@ -800,6 +814,12 @@ main {
   font-size: clamp(1.9rem, 5vw, 3rem);
 }
 
+.feedback-cta-copy {
+  max-width: 58ch;
+  margin: 1rem 0 0;
+  font-weight: 700;
+}
+
 .site-footer {
   border-top: 1px solid var(--color-border);
   background: rgba(255, 255, 255, 0.5);
@@ -893,13 +913,30 @@ main {
 .choice-card-body {
   min-height: 5.25rem;
   display: grid;
-  align-content: center;
+  grid-template-columns: auto minmax(0, 1fr);
+  align-items: center;
   gap: 0.25rem;
   padding: 1rem;
   border: 2px solid var(--color-border);
   border-radius: 14px;
   background: #fffdfa;
   transition: border-color 180ms ease, background-color 180ms ease, box-shadow 180ms ease;
+}
+
+.choice-card-body > svg {
+  margin-right: 0.55rem;
+  color: var(--color-primary-strong);
+}
+
+.choice-card-body > span {
+  min-width: 0;
+  display: grid;
+  gap: 0.25rem;
+}
+
+.choice-card-body strong,
+.choice-card-body small {
+  display: block;
 }
 
 .choice-card-body strong,
@@ -1361,6 +1398,16 @@ main {
   }
 }
 
+@media (max-width: 59.99rem) {
+  .hero-section {
+    padding-block: clamp(3rem, 8vw, 4.5rem);
+  }
+
+  .hero-visual {
+    display: none;
+  }
+}
+
 @media (min-width: 40rem) {
   .brand-copy small {
     display: block;
@@ -1462,34 +1509,13 @@ main {
 }
 
 @media (max-width: 30rem) {
+  .hero-section {
+    padding-block: 3rem 2.5rem;
+  }
+
   .hero-actions .button,
   .success-actions .button {
     width: 100%;
-  }
-
-  .hero-visual {
-    min-height: 19rem;
-  }
-
-  .orbit-one {
-    width: 17rem;
-    height: 17rem;
-  }
-
-  .orbit-two {
-    width: 21rem;
-    height: 21rem;
-  }
-
-  .window-content {
-    gap: 0.65rem;
-    padding: 0.9rem;
-  }
-
-  .mini-card {
-    min-height: 5.25rem;
-    padding: 0.75rem;
-    font-size: 1.1rem;
   }
 
   .app-card-topline,

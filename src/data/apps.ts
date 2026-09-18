@@ -1,4 +1,4 @@
-export const appCategories = ["Entertainment", "Finance", "Productivity"] as const;
+export const appCategories = ["Game", "Music", "Fun / Experiment"] as const;
 export const appStatuses = ["live", "beta", "coming_soon"] as const;
 
 export type AppCategory = (typeof appCategories)[number];
@@ -10,6 +10,7 @@ export type CompanyApp = {
   name: string;
   description: string;
   url: string;
+  githubUrl?: string;
   icon: AppIconName;
   category: AppCategory;
   status: AppStatus;
@@ -20,30 +21,32 @@ export const apps: CompanyApp[] = [
     id: "ma-soi",
     name: "Ma Sói",
     description:
-      "Tạo phòng, mời đồng đội và bắt đầu một ván Ma Sói vui vẻ sau giờ làm.",
-    url: "https://wolf.example.com",
+      "Lập làng, giấu vai và xem đồng nghiệp nào đáng tin nhất.",
+    url: "https://werewolves-game.laztar.xyz/",
     icon: "wolf",
-    category: "Entertainment",
+    category: "Game",
     status: "live",
   },
   {
     id: "office-jukebox",
     name: "Office Jukebox",
     description:
-      "Tìm, yêu cầu và cùng nhau tạo hàng đợi nhạc cho không gian văn phòng.",
-    url: "https://music.example.com",
+      "Chọn nhạc, vote bài và cùng quyết định hôm nay văn phòng nghe gì.",
+    url: "https://music.laztar.xyz/guest",
+    githubUrl: "https://github.com/vuphongle/office-jukebox",
     icon: "music",
-    category: "Entertainment",
+    category: "Music",
     status: "beta",
   },
   {
     id: "sao-ke",
-    name: "Sao Kê",
+    name: "Sao kê",
     description:
-      "Tra cứu và tổng hợp các khoản thu chi nội bộ theo cách rõ ràng, dễ theo dõi.",
-    url: "https://statements.example.com",
+      "Minh bạch theo cách không ai yêu cầu, nhưng ai cũng muốn xem.",
+    url: "https://saoke.laztar.xyz/",
+    githubUrl: "https://github.com/vuphongle/nuoitoi",
     icon: "receipt",
-    category: "Finance",
+    category: "Fun / Experiment",
     status: "live",
   },
 ];

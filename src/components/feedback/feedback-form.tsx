@@ -1,6 +1,14 @@
 "use client";
 
-import { CheckCircle, PaperPlaneTilt, WarningCircle } from "@phosphor-icons/react";
+import {
+  BugBeetle,
+  CheckCircle,
+  HandHeart,
+  Lightbulb,
+  PaperPlaneTilt,
+  RocketLaunch,
+  WarningCircle,
+} from "@phosphor-icons/react";
 import Link from "next/link";
 import { useActionState, useEffect, useRef } from "react";
 import { useFormStatus } from "react-dom";
@@ -10,17 +18,19 @@ import { submitFeedback } from "@/features/feedback/actions";
 import { initialFeedbackFormState } from "@/features/feedback/form-state";
 
 const feedbackOptions = [
-  { value: "bug", label: "Bug", hint: "Một lỗi đang cản trở trải nghiệm" },
+  { value: "bug", label: "Báo lỗi", hint: "Có gì đó chưa chạy như mong đợi", icon: BugBeetle },
   {
     value: "feature_request",
-    label: "Feature Request",
-    hint: "Một tính năng cụ thể bạn muốn có",
+    label: "Đề xuất tính năng",
+    hint: "Có một feature sẽ giúp mọi người dùng tốt hơn",
+    icon: RocketLaunch,
   },
-  { value: "idea", label: "Idea", hint: "Một hướng cải tiến hoặc ý tưởng mới" },
+  { value: "idea", label: "Có ý tưởng", hint: "Một hướng mới, một thử nghiệm hay ho", icon: Lightbulb },
   {
     value: "contribution",
-    label: "Contribution",
-    hint: "Bạn muốn tham gia đóng góp vào project",
+    label: "Muốn tham gia",
+    hint: "Bạn muốn cùng team làm một project nào đó",
+    icon: HandHeart,
   },
 ] as const;
 
@@ -30,7 +40,7 @@ function SubmitButton() {
   return (
     <button className="button button-primary submit-button" type="submit" disabled={pending}>
       <PaperPlaneTilt size={20} weight="bold" aria-hidden="true" />
-      {pending ? "Đang gửi..." : "Gửi feedback"}
+      {pending ? "Đang gửi..." : "Gửi cho team"}
     </button>
   );
 }
@@ -42,7 +52,7 @@ export function FeedbackSuccess({ submissionId }: { submissionId?: string }) {
         <CheckCircle size={34} weight="fill" />
       </span>
       <p className="eyebrow">Đã ghi nhận</p>
-      <h2>Cảm ơn bạn đã giúp Company Hub tốt hơn.</h2>
+      <h2>Cảm ơn bạn đã làm LAZTAR Hub hay hơn.</h2>
       <p>
         Feedback đã được lưu vào hệ thống
         {submissionId ? ` với mã ${submissionId.slice(0, 8)}` : ""}.
@@ -56,7 +66,7 @@ export function FeedbackSuccess({ submissionId }: { submissionId?: string }) {
           type="button"
           onClick={() => window.location.reload()}
         >
-          Gửi feedback khác
+          Gửi góp ý khác
         </button>
       </div>
     </div>
@@ -111,18 +121,25 @@ export function FeedbackForm() {
         aria-describedby={state.errors.type ? "type-error" : undefined}
       >
         <legend>
-          Loại feedback <span aria-hidden="true">*</span>
+          Bạn muốn góp gì? <span aria-hidden="true">*</span>
         </legend>
         <div className="feedback-type-grid" id="type">
-          {feedbackOptions.map((option) => (
-            <label className="choice-card" key={option.value}>
-              <input type="radio" name="type" value={option.value} required />
-              <span className="choice-card-body">
-                <strong>{option.label}</strong>
-                <small>{option.hint}</small>
-              </span>
-            </label>
-          ))}
+          {feedbackOptions.map((option) => {
+            const Icon = option.icon;
+
+            return (
+              <label className="choice-card" key={option.value}>
+                <input type="radio" name="type" value={option.value} required />
+                <span className="choice-card-body">
+                  <Icon size={24} weight="duotone" aria-hidden="true" />
+                  <span>
+                    <strong>{option.label}</strong>
+                    <small>{option.hint}</small>
+                  </span>
+                </span>
+              </label>
+            );
+          })}
         </div>
         {state.errors.type && (
           <p className="field-error" id="type-error" role="alert">
@@ -134,7 +151,7 @@ export function FeedbackForm() {
       <div className="form-field">
         <label htmlFor="appId">App / project liên quan</label>
         <select id="appId" name="appId" aria-describedby="appId-help appId-error">
-          <option value="">Company Hub / Feedback chung</option>
+          <option value="">LAZTAR Hub / Góp ý chung</option>
           {apps.map((app) => (
             <option value={app.id} key={app.id}>
               {app.name}
@@ -142,7 +159,7 @@ export function FeedbackForm() {
           ))}
         </select>
         <p className="field-help" id="appId-help">
-          Chọn app giúp admin chuyển feedback đến đúng project nhanh hơn.
+          Chọn project giúp team đọc đúng ngữ cảnh nhanh hơn.
         </p>
         {state.errors.appId && (
           <p className="field-error" id="appId-error" role="alert">
@@ -163,7 +180,7 @@ export function FeedbackForm() {
           maxLength={120}
           required
           aria-describedby="title-help title-error"
-          placeholder="Tóm tắt feedback trong một câu ngắn"
+          placeholder="Tóm tắt idea hoặc vấn đề trong một câu ngắn"
         />
         <p className="field-help" id="title-help">
           Từ 4 đến 120 ký tự.
@@ -187,7 +204,7 @@ export function FeedbackForm() {
           maxLength={5000}
           required
           aria-describedby="content-help content-error"
-          placeholder="Mô tả điều bạn gặp phải, điều bạn mong muốn hoặc cách bạn muốn đóng góp..."
+          placeholder="Kể team nghe điều bạn gặp phải, điều muốn thử hoặc cách bạn muốn góp sức..."
         />
         <p className="field-help" id="content-help">
           Tối thiểu 20 ký tự. Với bug, hãy thêm bước tái hiện nếu có thể.
@@ -206,7 +223,7 @@ export function FeedbackForm() {
 
       <div className="form-actions">
         <SubmitButton />
-        <p>Feedback sẽ được lưu trực tiếp vào hệ thống để admin theo dõi.</p>
+        <p>Góp ý sẽ vào inbox của team để mọi người cùng theo dõi.</p>
       </div>
     </form>
   );
