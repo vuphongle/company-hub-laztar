@@ -36,7 +36,7 @@ export const apps: CompanyApp[] = [
     githubUrl: "https://github.com/vuphongle/office-jukebox",
     icon: "music",
     category: "Music",
-    status: "beta",
+    status: "live",
   },
   {
     id: "sao-ke",
