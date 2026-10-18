@@ -21,7 +21,7 @@ export const apps: CompanyApp[] = [
     id: "ma-soi",
     name: "Ma Sói",
     description:
-      "Lập làng, giấu vai và xem đồng nghiệp nào đáng tin nhất.",
+      "Chơi Ma Sói online cùng nhóm bạn và đồng nghiệp với quản trò tự động của LAZTAR.",
     url: "https://werewolves-game.laztar.xyz/",
     icon: "wolf",
     category: "Game",
@@ -31,7 +31,7 @@ export const apps: CompanyApp[] = [
     id: "office-jukebox",
     name: "Office Jukebox",
     description:
-      "Chọn nhạc, vote bài và cùng quyết định hôm nay văn phòng nghe gì.",
+      "Ứng dụng chọn nhạc và bình chọn bài hát để cả văn phòng cùng quyết định nghe gì.",
     url: "https://music.laztar.xyz/guest",
     githubUrl: "https://github.com/vuphongle/office-jukebox",
     icon: "music",
@@ -42,7 +42,7 @@ export const apps: CompanyApp[] = [
     id: "sao-ke",
     name: "Sao kê",
     description:
-      "Minh bạch theo cách không ai yêu cầu, nhưng ai cũng muốn xem.",
+      "Dự án thử nghiệm dashboard lì xì và sao kê với cách trình bày minh bạch, vui nhộn.",
     url: "https://saoke.laztar.xyz/",
     githubUrl: "https://github.com/vuphongle/nuoitoi",
     icon: "receipt",

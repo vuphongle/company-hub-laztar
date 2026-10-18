@@ -9,6 +9,7 @@ import {
   Receipt,
 } from "@phosphor-icons/react";
 import { useMemo, useState } from "react";
+import Link from "next/link";
 
 import {
   appCategories,
@@ -46,6 +47,9 @@ function AppCard({ app }: { app: CompanyApp }) {
         <p className="eyebrow">{app.category}</p>
         <h3>{app.name}</h3>
         <p>{app.description}</p>
+        <Link className="text-link" href={`/ung-dung/${app.id}`}>
+          Tìm hiểu {app.name}
+        </Link>
       </div>
       <div className="app-card-actions">
         <a

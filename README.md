@@ -98,7 +98,7 @@ Không chạy `db:generate` cho setup thông thường; migration hiện có đ�
 
 ## Production Runtime
 
-Phase này chưa deploy production. Khi triển khai lên VPS, đặt database ngoài source/build directory và bảo đảm process có quyền đọc/ghi thư mục đó, ví dụ:
+Khi triển khai lên VPS, đặt database ngoài source/build directory và bảo đảm process có quyền đọc/ghi thư mục đó, ví dụ:
 
 ```dotenv
 PORT=3100
@@ -134,7 +134,14 @@ Mở `src/data/apps.ts` và thêm một object vào mảng `apps`:
 
 UI, search, filter và dropdown chọn project trong form feedback tự đọc từ nguồn dữ liệu này. Nếu cần icon/category mới, mở rộng union trong cùng file và mapping icon tại `src/components/app-directory.tsx`.
 
+Thêm nội dung tương ứng theo `id` vào `src/data/app-guides.ts` với `overview`,
+`highlights`, `steps`, `note`. Trang `/ung-dung/<id>` được dựng sẵn và tự đưa vào
+sitemap; nội dung cần mô tả đúng chức năng và điều kiện truy cập của ứng dụng.
+
 ## Kiểm tra chất lượng
+
+Phân tích website, các thay đổi SEO và hướng dẫn Google Search Console:
+[SEO audit cho LAZTAR](docs/seo-audit.vi.md).
 
 ```bash
 npm run lint
@@ -147,6 +154,7 @@ Với application đang chạy bằng `npm run dev` hoặc `npm run start`, ch�
 
 ```bash
 npm run test:integration
+npm run test:seo
 ```
 
 Integration check tự tạo rồi dọn admin/feedback tạm để xác minh public submit, login, session cookie, protected admin reads và SQLite status persistence.
