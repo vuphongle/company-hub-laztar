@@ -136,7 +136,7 @@ main {
 }
 
 .narrow-shell {
-  max-width: 52rem;
+  max-width: 64rem;
 }
 
 .sr-only {
@@ -505,11 +505,11 @@ main {
 }
 
 .directory-section {
-  padding-block: 2rem clamp(4rem, 10vw, 7rem);
+  padding-block: 2rem clamp(3rem, 6vw, 5rem);
 }
 
 .discovery-section {
-  padding-block: 0 clamp(4rem, 10vw, 7rem);
+  padding-block: 0 clamp(3rem, 6vw, 5rem);
 }
 
 .discovery-grid {
@@ -546,11 +546,12 @@ main {
 }
 
 .faq-section {
-  padding-bottom: clamp(4rem, 10vw, 7rem);
+  padding-bottom: clamp(3rem, 6vw, 5rem);
 }
 
 .faq-section .page-heading {
-  margin-bottom: 1.5rem;
+  max-width: 58rem;
+  margin-bottom: 1.25rem;
 }
 
 .faq-section h2 {
@@ -849,7 +850,7 @@ main {
 }
 
 .feedback-cta {
-  padding-bottom: clamp(4rem, 10vw, 7rem);
+  padding-bottom: clamp(3rem, 6vw, 5rem);
 }
 
 .feedback-cta-card {
@@ -858,7 +859,7 @@ main {
   display: grid;
   gap: 1.5rem;
   align-items: center;
-  padding: clamp(1.5rem, 6vw, 3.5rem);
+  padding: clamp(1.5rem, 5vw, 3rem);
   border: 3px solid var(--color-ink);
   border-radius: var(--radius-xl);
   background: #fdba74;
@@ -913,7 +914,15 @@ main {
 }
 
 .page-section {
-  padding-block: clamp(3rem, 8vw, 6rem);
+  padding-block: clamp(2.5rem, 6vw, 4.5rem);
+}
+
+.feedback-page .page-heading {
+  margin-bottom: 1.5rem;
+}
+
+.feedback-page .form-panel {
+  padding: clamp(1.25rem, 3vw, 2rem);
 }
 
 .content-page h2 {
