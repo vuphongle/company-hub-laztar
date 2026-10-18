@@ -1,6 +1,9 @@
 # LAZTAR Hub
 
-LAZTAR Hub là internal playground để nhân viên khám phá project, dùng tool, góp ý và tham gia đóng góp trong một workflow gọn nhẹ.
+LAZTAR Hub là dự án nội bộ do nhân viên và thành viên LAZTAR xây dựng để khám phá project, dùng tool, góp ý và tham gia đóng góp trong một workflow gọn nhẹ. Hub không thay thế website giới thiệu công ty hoặc dịch vụ chính thức.
+
+- Website chính thức của công ty: https://laztar.com
+- LAZTAR Hub: https://laztar.xyz
 
 ## Tính năng V1
 

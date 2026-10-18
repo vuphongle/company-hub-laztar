@@ -26,14 +26,19 @@ export default function HomePage() {
               alternateName: "LAZTAR",
               description: site.description,
               inLanguage: "vi",
+              creator: { "@id": `${site.url}/#internal-team` },
+              publisher: { "@id": `${site.url}/#internal-team` },
             },
             {
               "@type": "Organization",
-              "@id": `${site.url}/#organization`,
-              name: "LAZTAR",
-              url: `${site.url}/`,
-              description:
-                "LAZTAR xây dựng các ứng dụng nội bộ và dự án thử nghiệm để cùng chơi, làm việc và đóng góp.",
+              "@id": `${site.url}/#internal-team`,
+              name: site.teamName,
+              description: "Nhóm nhân viên LAZTAR phát triển các dự án nội bộ và thử nghiệm.",
+              parentOrganization: {
+                "@type": "Organization",
+                name: site.companyName,
+                url: `${site.companyUrl}/`,
+              },
             },
             {
               "@type": "ItemList",
@@ -104,9 +109,9 @@ export default function HomePage() {
           </div>
           <div className="discovery-copy">
             <p>
-              LAZTAR Hub tập hợp các ứng dụng web, game và thử nghiệm của LAZTAR.
-              Bạn có thể mở nhanh từng project, đọc hướng dẫn sử dụng và gửi góp ý
-              cho team từ cùng một nơi.
+              <strong>LAZTAR Hub</strong> là dự án nội bộ do nhân viên và thành viên của <a className="text-link" href={site.companyUrl}>LAZTAR</a>
+              xây dựng để thử nghiệm và chia sẻ các ứng dụng web, game và công cụ.
+              Đây không phải website giới thiệu công ty hay dịch vụ; thông tin về công ty và dịch vụ được cung cấp tại <a className="text-link" href={site.companyUrl}>laztar.com</a>.
             </p>
             <p>
               Muốn chơi Ma Sói online với bạn bè hoặc đồng nghiệp? Hãy thử phiên bản
@@ -146,6 +151,13 @@ export default function HomePage() {
               <p>
                 Office Jukebox giúp mọi người trong văn phòng cùng chọn bài hát và
                 bình chọn danh sách nhạc chung. Quyền truy cập tùy cấu hình nội bộ.
+              </p>
+            </details>
+            <details>
+              <summary>LAZTAR Hub có phải website chính của LAZTAR không?</summary>
+              <p>
+                Không. Đây là dự án nội bộ để thử nghiệm và chia sẻ ứng dụng. Thông tin
+                về công ty và dịch vụ được đăng trên <a className="text-link" href={site.companyUrl}>laztar.com</a>.
               </p>
             </details>
           </div>

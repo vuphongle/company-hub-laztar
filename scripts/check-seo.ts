@@ -67,7 +67,14 @@ for (const path of publicPaths) {
   const data = [...html.matchAll(/<script type="application\/ld\+json">([\s\S]*?)<\/script>/g)]
     .map((match) => JSON.parse(match[1]));
   if (path === "/") {
-    assert(data.some((item) => item["@graph"]?.some((node: Record<string, string>) => node["@type"] === "WebSite")), "Missing WebSite data");
+    const graph = data.flatMap((item) => item["@graph"] ?? []);
+    const website = graph.find((item) => item["@type"] === "WebSite");
+    assert(website, "Missing WebSite data");
+    assert.equal(website.publisher?.["@id"], `${site.url}/#internal-team`, "WebSite publisher internal team");
+    const organization = graph.find((item) => item["@type"] === "Organization");
+    assert(organization, "Missing internal team Organization data");
+    assert.equal(organization.name, site.teamName, "Internal team name");
+    assert.equal(organization.parentOrganization?.url, `${site.companyUrl}/`, "Parent company URL");
     for (const appPath of appPaths) {
       assert(html.includes(`href="${appPath}"`), `Missing crawlable link: ${appPath}`);
     }

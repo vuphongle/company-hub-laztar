@@ -2,10 +2,13 @@ import type { Metadata } from "next";
 
 export const site = {
   name: "LAZTAR Hub",
+  teamName: "Đội ngũ phát triển nội bộ LAZTAR",
+  companyName: "LAZTAR",
+  companyUrl: "https://laztar.com",
   url: "https://laztar.xyz",
-  title: "LAZTAR Hub | Ứng dụng nội bộ, Ma Sói online và Office Jukebox",
+  title: "LAZTAR Hub | Dự án nội bộ của đội ngũ LAZTAR",
   description:
-    "LAZTAR Hub là nơi khám phá ứng dụng nội bộ của LAZTAR: chơi Ma Sói online, bình chọn nhạc với Office Jukebox, trải nghiệm Sao kê và góp ý cho các dự án.",
+    "LAZTAR Hub là dự án nội bộ do đội ngũ LAZTAR xây dựng để thử nghiệm app, game và công cụ. Thông tin về công ty và dịch vụ: laztar.com.",
 } as const;
 
 export function publicPageMetadata({
@@ -22,8 +25,9 @@ export function publicPageMetadata({
     description,
     alternates: { canonical: `${site.url}${path}` },
     robots: { index: true, follow: true },
-    creator: site.name,
-    publisher: site.name,
+    authors: [{ name: site.teamName }],
+    creator: site.teamName,
+    publisher: site.teamName,
     openGraph: {
       type: "website",
       locale: "vi_VN",
