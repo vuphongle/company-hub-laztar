@@ -1,28 +1,46 @@
 import Link from "next/link";
 
+import { StructuredData } from "@/components/structured-data";
 import { publicPageMetadata } from "@/config/site";
+import { site } from "@/config/site";
 import { apps } from "@/data/apps";
 
 export const metadata = publicPageMetadata({
-  title: "LAZTAR là gì? Giới thiệu LAZTAR Hub và các dự án",
+  title: "LAZTAR Hub là gì? Dự án nội bộ của đội ngũ LAZTAR",
   description:
-    "Tìm hiểu LAZTAR Hub, nơi tập hợp Ma Sói, Office Jukebox, Sao kê và các dự án nội bộ để cùng trải nghiệm, góp ý và đóng góp mã nguồn.",
+    "Tìm hiểu LAZTAR Hub, dự án nội bộ do đội ngũ LAZTAR xây dựng để thử nghiệm Ma Sói, Office Jukebox, Sao kê và các ứng dụng web.",
   path: "/about",
 });
 
 export default function AboutPage() {
   return (
     <section className="page-section">
+      <StructuredData
+        data={{
+          "@context": "https://schema.org",
+          "@type": "AboutPage",
+          "@id": `${site.url}/about#about-page`,
+          url: `${site.url}/about`,
+          name: "LAZTAR Hub là gì?",
+          about: { "@id": `${site.url}/#website` },
+          isPartOf: { "@id": `${site.url}/#website` },
+          publisher: { "@id": `${site.url}/#internal-team` },
+        }}
+      />
       <article className="shell narrow-shell content-page">
         <div className="page-heading">
           <p className="eyebrow">Giới thiệu</p>
           <h1>LAZTAR Hub là gì?</h1>
-          <p>Nơi tập hợp các ứng dụng, ý tưởng và dự án thử nghiệm của LAZTAR.</p>
+          <p>Không gian thử nghiệm nội bộ do nhân viên và thành viên LAZTAR xây dựng.</p>
         </div>
         <p>
-          LAZTAR Hub tại laztar.xyz là điểm bắt đầu để khám phá những project nội bộ
-          được xây dựng cho việc chơi, làm việc và thử nghiệm cùng nhau. Bạn có thể
+          LAZTAR Hub tại laztar.xyz là dự án nội bộ do nhân viên và thành viên <a className="text-link" href={site.companyUrl}>LAZTAR</a>
+          xây dựng cho việc chơi, làm việc và thử nghiệm cùng nhau. Bạn có thể
           tìm ứng dụng theo tên, lọc theo nhóm và mở từng dự án từ một nơi.
+        </p>
+        <p>
+          Hub không thay thế website giới thiệu công ty hoặc dịch vụ của LAZTAR. Hãy xem
+          <a className="text-link" href={site.companyUrl}> laztar.com</a> để tìm thông tin chính thức về doanh nghiệp.
         </p>
         <h2>Các dự án trên LAZTAR Hub</h2>
         <ul>

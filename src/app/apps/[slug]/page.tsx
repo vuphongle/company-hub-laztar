@@ -53,7 +53,7 @@ export default async function AppPage({ params }: Props) {
               url: `${site.url}/apps/${app.slug}`,
               applicationCategory: app.category === "Game" ? "GameApplication" : "WebApplication",
               operatingSystem: "Web",
-              publisher: { "@type": "Organization", name: "LAZTAR", url: `${site.url}/` },
+              publisher: { "@id": `${site.url}/#internal-team` },
             },
           ],
         }}

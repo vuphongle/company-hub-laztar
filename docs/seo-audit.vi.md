@@ -30,6 +30,7 @@ Các dự án con là những website riêng: sitemap của Hub không thay th�
 ## Thay đổi trong mã nguồn Hub
 
 - Cấu hình chung tại `src/config/site.ts`, dùng URL chính `https://laztar.xyz`.
+- Khai báo rõ phạm vi: `LAZTAR Hub` là dự án nội bộ do nhân viên và thành viên `LAZTAR` xây dựng, không phải website giới thiệu công ty hoặc dịch vụ. Liên kết một chiều về `https://laztar.com` chỉ để người dùng tìm thông tin chính thức; JSON-LD ghi nhận nhóm phát triển nội bộ là publisher và công ty là `parentOrganization`, tránh nhận Hub là website chính thức.
 - Title, description, canonical riêng cho từng trang công khai; Open Graph, Twitter card và ảnh chia sẻ sinh bằng code.
 - JSON-LD `WebSite` có tên LAZTAR Hub và tên thay thế LAZTAR; `ItemList` khớp ứng dụng hiển thị. Breadcrumb cho các trang ứng dụng.
 - Trang chủ có nội dung giải thích LAZTAR Hub, các nhóm nhu cầu chính và FAQ hiển thị; mỗi trang app có JSON-LD `SoftwareApplication` cùng breadcrumb.
@@ -94,6 +95,7 @@ thực tế; dùng Google Keyword Planner nếu cần volume thị trường.
 ### Tuần đầu: giúp Google hiểu thương hiệu
 
 - Giữ thống nhất tên LAZTAR / LAZTAR Hub trong website, repository GitHub và các hồ sơ công khai thực sự thuộc dự án.
+- Không cần tạo liên kết ngược từ `laztar.com` về Hub. Hai website giữ mục đích và canonical độc lập; chỉ duy trì liên kết một chiều từ Hub tới website chính thức của công ty để phân biệt phạm vi.
 - Thêm liên kết về Hub và trang giới thiệu ứng dụng trong README GitHub, website dự án và các kênh đang sở hữu. Liên kết phải hữu ích cho người đọc.
 - Đọc lại phần giới thiệu từng ứng dụng với người phụ trách sản phẩm; cập nhật ảnh chụp, điều kiện truy cập và hướng dẫn thực tế khi có thay đổi.
 - Xác nhận lại canonical `tranx.vn` của Sao kê có phải chủ đích hay cấu hình sót từ bản mẫu.
