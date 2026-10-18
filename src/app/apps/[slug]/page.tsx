@@ -38,10 +38,23 @@ export default async function AppPage({ params }: Props) {
       <StructuredData
         data={{
           "@context": "https://schema.org",
-          "@type": "BreadcrumbList",
-          itemListElement: [
-            { "@type": "ListItem", position: 1, name: site.name, item: `${site.url}/` },
-            { "@type": "ListItem", position: 2, name: app.name, item: `${site.url}/apps/${app.slug}` },
+          "@graph": [
+            {
+              "@type": "BreadcrumbList",
+              itemListElement: [
+                { "@type": "ListItem", position: 1, name: site.name, item: `${site.url}/` },
+                { "@type": "ListItem", position: 2, name: app.name, item: `${site.url}/apps/${app.slug}` },
+              ],
+            },
+            {
+              "@type": "SoftwareApplication",
+              name: app.name,
+              description: app.description,
+              url: `${site.url}/apps/${app.slug}`,
+              applicationCategory: app.category === "Game" ? "GameApplication" : "WebApplication",
+              operatingSystem: "Web",
+              publisher: { "@type": "Organization", name: "LAZTAR", url: `${site.url}/` },
+            },
           ],
         }}
       />

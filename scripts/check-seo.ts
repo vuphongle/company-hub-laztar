@@ -85,9 +85,13 @@ for (const path of publicPaths) {
     assert(imageResponse.headers.get("content-type")?.startsWith("image/png"), "Open Graph image type");
     assert((await imageResponse.arrayBuffer()).byteLength > 1000, "Open Graph image is empty");
   } else if (path.startsWith("/apps/")) {
-    const breadcrumb = data.find((item) => item["@type"] === "BreadcrumbList");
+    const breadcrumb = data.flatMap((item) => item["@graph"] ?? [item])
+      .find((item) => item["@type"] === "BreadcrumbList");
     assert(breadcrumb, `${path}: missing breadcrumb data`);
     assert.equal(breadcrumb.itemListElement.at(-1).item, `${site.url}${path}`, `${path}: breadcrumb URL`);
+    const application = data.flatMap((item) => item["@graph"] ?? [item])
+      .find((item) => item["@type"] === "SoftwareApplication");
+    assert(application, `${path}: missing SoftwareApplication data`);
   }
 }
 

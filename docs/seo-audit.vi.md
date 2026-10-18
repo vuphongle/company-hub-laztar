@@ -32,6 +32,7 @@ Các dự án con là những website riêng: sitemap của Hub không thay th�
 - Cấu hình chung tại `src/config/site.ts`, dùng URL chính `https://laztar.xyz`.
 - Title, description, canonical riêng cho từng trang công khai; Open Graph, Twitter card và ảnh chia sẻ sinh bằng code.
 - JSON-LD `WebSite` có tên LAZTAR Hub và tên thay thế LAZTAR; `ItemList` khớp ứng dụng hiển thị. Breadcrumb cho các trang ứng dụng.
+- Trang chủ có nội dung giải thích LAZTAR Hub, các nhóm nhu cầu chính và FAQ hiển thị; mỗi trang app có JSON-LD `SoftwareApplication` cùng breadcrumb.
 - Thêm `/about` và `/apps/werewolf`, `/apps/office-jukebox`, `/apps/statements`, mô tả mục đích và cách bắt đầu. Trang được dựng sẵn, có liên kết HTML từ danh mục.
 - Thêm robots cho phép crawl và khai báo sitemap. Sitemap chỉ chứa 5 trang có thể index trên tên miền chính, không chứa form, admin, URL lỗi hay tên miền ứng dụng khác.
 - `noindex` cho form góp ý và toàn bộ cây `/admin`. Không chặn crawl các trang này trong robots để Google có thể đọc `noindex`. Authentication tiếp tục kiểm soát quyền truy cập.
@@ -69,6 +70,26 @@ Theo yêu cầu chủ website, các đường dẫn được chuyển sang tiế
 7. Nếu cần cung cấp phiên bản `www`, thêm DNS, chứng chỉ và redirect về `https://laztar.xyz`; không tạo hai phiên bản có nội dung trùng nhau.
 
 ## Lộ trình nội dung và đo lường
+
+### Nghiên cứu truy vấn sơ bộ (18/10/2026)
+
+Kiểm tra gợi ý Google bằng giao diện tiếng Việt cho các tên thương hiệu và chức năng
+đang có trên Hub. Đây là tín hiệu định hướng nội dung, không phải số liệu volume,
+CTR hay độ cạnh tranh; các truy vấn thương hiệu như `LAZTAR Hub` và `Office Jukebox
+LAZTAR` chưa có gợi ý đủ tin cậy để kết luận có nhu cầu tìm kiếm lớn.
+
+| Cụm truy vấn ưu tiên | Ý định | URL nên đáp ứng | Cách triển khai |
+| --- | --- | --- | --- |
+| `LAZTAR`, `LAZTAR Hub`, `ứng dụng nội bộ LAZTAR` | Tìm thương hiệu | `/`, `/about` | Giữ tên thương hiệu nhất quán; mô tả Hub là danh mục app nội bộ và liên kết về từng project |
+| `Ma Sói online`, `Ma Sói online với bạn bè` | Tìm game để chơi | `/apps/werewolf` | Mô tả chơi trên trình duyệt, nhóm bạn/đồng nghiệp, quản trò tự động và các bước bắt đầu |
+| `quản trò Ma Sói tự động` | Tìm chức năng cụ thể | `/apps/werewolf` | Chỉ dùng khi tính năng thực tế còn đúng; cập nhật hướng dẫn theo phiên bản game |
+| `Office Jukebox`, `bình chọn nhạc văn phòng`, `chọn nhạc văn phòng` | Tìm công cụ âm nhạc nhóm | `/apps/office-jukebox` | Giải thích chọn bài, bình chọn, điều kiện truy cập và bối cảnh dùng trong văn phòng |
+| `Sao kê LAZTAR`, `dashboard lì xì` | Tìm dự án/trải nghiệm thử nghiệm | `/apps/statements` | Nêu rõ đây là dashboard thử nghiệm, ngữ cảnh số liệu và giới hạn; không gọi là dịch vụ tài chính |
+
+Không nên tạo trang riêng cho từng biến thể từ khóa hoặc lặp cụm từ trong metadata.
+Mỗi URL cần trả lời trọn một nhu cầu thật. Sau khi triển khai, lấy **Queries** và
+**Pages** trong Search Console để thay thứ tự ưu tiên bằng impressions, CTR và vị trí
+thực tế; dùng Google Keyword Planner nếu cần volume thị trường.
 
 ### Tuần đầu: giúp Google hiểu thương hiệu
 
