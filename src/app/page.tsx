@@ -1,11 +1,45 @@
 import Link from "next/link";
 
 import { AppDirectory } from "@/components/app-directory";
+import { StructuredData } from "@/components/structured-data";
+import { publicPageMetadata, site } from "@/config/site";
 import { apps } from "@/data/apps";
+
+export const metadata = publicPageMetadata({
+  title: site.title,
+  description: site.description,
+  path: "/",
+});
 
 export default function HomePage() {
   return (
     <>
+      <StructuredData
+        data={{
+          "@context": "https://schema.org",
+          "@graph": [
+            {
+              "@type": "WebSite",
+              "@id": `${site.url}/#website`,
+              url: `${site.url}/`,
+              name: site.name,
+              alternateName: "LAZTAR",
+              description: site.description,
+              inLanguage: "vi",
+            },
+            {
+              "@type": "ItemList",
+              name: "Các ứng dụng của LAZTAR",
+              itemListElement: apps.map((app, index) => ({
+                "@type": "ListItem",
+                position: index + 1,
+                name: app.name,
+                url: `${site.url}/ung-dung/${app.id}`,
+              })),
+            },
+          ],
+        }}
+      />
       <section className="hero-section">
         <div className="shell hero-grid">
           <div className="hero-copy reveal">
@@ -15,8 +49,9 @@ export default function HomePage() {
             </p>
             <h1>LAZTAR Hub</h1>
             <p className="hero-description">
-              Chơi một chút. Build một chút. Góp ý một chút.
-              <span> Nơi những project nội bộ được dùng, thử và làm tốt hơn cùng nhau.</span>
+              Khám phá các ứng dụng và dự án của LAZTAR.
+              <span> Chơi Ma Sói, chọn nhạc cùng Office Jukebox, trải nghiệm Sao kê
+                và góp ý để cùng làm các project tốt hơn.</span>
             </p>
             <div className="hero-actions">
               <a className="button button-primary" href="#directory-title">

@@ -97,7 +97,7 @@ async function postForm(
 try {
   const homeResponse = await getPage("/");
   assert(homeResponse.ok, `Home returned HTTP ${homeResponse.status}.`);
-  assert((await homeResponse.text()).includes("Company Hub"), "Home content is missing.");
+  assert((await homeResponse.text()).includes("LAZTAR Hub"), "Home content is missing.");
 
   const anonymousAdminResponse = await getPage("/admin");
   assert(

@@ -4,15 +4,21 @@ import "@fontsource-variable/nunito-sans";
 
 import { SiteFooter } from "@/components/site-footer";
 import { SiteHeader } from "@/components/site-header";
+import { site } from "@/config/site";
 
 import "./globals.css";
 
 export const metadata: Metadata = {
+  metadataBase: new URL(site.url),
   title: {
     default: "LAZTAR Hub",
     template: "%s | LAZTAR Hub",
   },
-  description: "Internal playground cho các app, ý tưởng và contribution của LAZTAR.",
+  description: site.description,
+  applicationName: site.name,
+  verification: {
+    google: process.env.GOOGLE_SITE_VERIFICATION || undefined,
+  },
 };
 
 export const viewport: Viewport = {

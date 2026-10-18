@@ -5,6 +5,7 @@ import { FeedbackForm } from "@/components/feedback/feedback-form";
 export const metadata: Metadata = {
   title: "Góp ý & tham gia",
   description: "Báo bug, đề xuất tính năng, chia sẻ ý tưởng hoặc tham gia xây project nội bộ.",
+  robots: { index: false, follow: true },
 };
 
 export default function FeedbackPage() {
