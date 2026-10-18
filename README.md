@@ -108,13 +108,16 @@ DATABASE_URL=file:/var/lib/company-hub/company-hub.db
 Sau đó chạy migration trước khi khởi động production runtime:
 
 ```bash
-npm ci
+npm ci --include=dev
 npm run build
 npm run db:migrate
 npm run start
 ```
 
 Không hard-code port hoặc database path trong source, nên cùng VPS có thể chạy nhiều service với cấu hình riêng.
+
+Build cần TypeScript và các dependency phát triển kể cả khi môi trường đặt
+`NODE_ENV=production`, vì vậy bước cài đặt production dùng `--include=dev`.
 
 ## Thêm app mới
 
