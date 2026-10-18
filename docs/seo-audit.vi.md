@@ -32,13 +32,26 @@ Các dự án con là những website riêng: sitemap của Hub không thay th�
 - Cấu hình chung tại `src/config/site.ts`, dùng URL chính `https://laztar.xyz`.
 - Title, description, canonical riêng cho từng trang công khai; Open Graph, Twitter card và ảnh chia sẻ sinh bằng code.
 - JSON-LD `WebSite` có tên LAZTAR Hub và tên thay thế LAZTAR; `ItemList` khớp ứng dụng hiển thị. Breadcrumb cho các trang ứng dụng.
-- Thêm `/gioi-thieu` và `/ung-dung/ma-soi`, `/ung-dung/office-jukebox`, `/ung-dung/sao-ke`, mô tả mục đích và cách bắt đầu. Trang được dựng sẵn, có liên kết HTML từ danh mục.
+- Thêm `/about` và `/apps/werewolf`, `/apps/office-jukebox`, `/apps/statements`, mô tả mục đích và cách bắt đầu. Trang được dựng sẵn, có liên kết HTML từ danh mục.
 - Thêm robots cho phép crawl và khai báo sitemap. Sitemap chỉ chứa 5 trang có thể index trên tên miền chính, không chứa form, admin, URL lỗi hay tên miền ứng dụng khác.
 - `noindex` cho form góp ý và toàn bộ cây `/admin`. Không chặn crawl các trang này trong robots để Google có thể đọc `noindex`. Authentication tiếp tục kiểm soát quyền truy cập.
 - Hỗ trợ biến `GOOGLE_SITE_VERIFICATION` khi chọn xác minh Search Console bằng HTML meta tag. Không cần biến này nếu xác minh Domain property qua DNS.
 - Không thêm meta keywords, đánh giá giả, số người dùng giả hay schema tìm kiếm không có chức năng tương ứng. Ảnh chia sẻ giúp hiển thị liên kết trên mạng xã hội, không phải yếu tố bảo đảm thứ hạng Google.
 
 Không tạo ngày `lastmod` theo thời gian mỗi lần build: chỉ thêm khi có ngày thay đổi nội dung thực tế.
+
+### URL công khai bằng tiếng Anh
+
+Theo yêu cầu chủ website, các đường dẫn được chuyển sang tiếng Anh. Nội dung và tên hiển thị vẫn bằng tiếng Việt. Sitemap, canonical, Open Graph, JSON-LD và liên kết nội bộ đều sử dụng URL mới; các URL cũ được chuyển hướng HTTP 308, giữ nguyên query string:
+
+| URL cũ | URL mới |
+| --- | --- |
+| `/gioi-thieu` | `/about` |
+| `/ung-dung/ma-soi` | `/apps/werewolf` |
+| `/ung-dung/office-jukebox` | `/apps/office-jukebox` |
+| `/ung-dung/sao-ke` | `/apps/statements` |
+
+Định danh ứng dụng trong feedback (`ma-soi`, `office-jukebox`, `sao-ke`) không đổi. Trang chủ và URL sitemap vẫn giữ nguyên. Sau khi triển khai, yêu cầu Google index các URL mới; không cần gửi yêu cầu index URL cũ. Google có thể cần thời gian đọc lại sitemap và chuyển hướng.
 
 ## Việc cần làm sau khi triển khai
 

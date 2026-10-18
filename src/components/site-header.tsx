@@ -13,7 +13,7 @@ export function SiteHeader() {
 
         <nav className="primary-nav" aria-label="Điều hướng chính">
           <Link href="/">Khám phá app</Link>
-          <Link href="/gioi-thieu">Giới thiệu</Link>
+          <Link href="/about">Giới thiệu</Link>
           <Link href="/feedback">Góp ý</Link>
           <Link href="/admin">Admin</Link>
         </nav>

@@ -47,7 +47,7 @@ function AppCard({ app }: { app: CompanyApp }) {
         <p className="eyebrow">{app.category}</p>
         <h3>{app.name}</h3>
         <p>{app.description}</p>
-        <Link className="text-link" href={`/ung-dung/${app.id}`}>
+        <Link className="text-link" href={`/apps/${app.slug}`}>
           Tìm hiểu {app.name}
         </Link>
       </div>

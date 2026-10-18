@@ -5,32 +5,32 @@ import { notFound } from "next/navigation";
 import { StructuredData } from "@/components/structured-data";
 import { publicPageMetadata, site } from "@/config/site";
 import { appGuides } from "@/data/app-guides";
-import { apps, getAppById } from "@/data/apps";
+import { apps, getAppBySlug } from "@/data/apps";
 
 type Props = { params: Promise<{ slug: string }> };
 
 export const dynamicParams = false;
 
 export function generateStaticParams() {
-  return apps.map((app) => ({ slug: app.id }));
+  return apps.map((app) => ({ slug: app.slug }));
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params;
-  const app = getAppById(slug);
+  const app = getAppBySlug(slug);
   if (!app) notFound();
 
   return publicPageMetadata({
     title: `${app.name} — Giới thiệu ứng dụng | LAZTAR Hub`,
     description: app.description,
-    path: `/ung-dung/${app.id}`,
+    path: `/apps/${app.slug}`,
   });
 }
 
 export default async function AppPage({ params }: Props) {
   const { slug } = await params;
-  const app = getAppById(slug);
-  const guide = appGuides[slug];
+  const app = getAppBySlug(slug);
+  const guide = app ? appGuides[app.id] : undefined;
   if (!app || !guide) notFound();
 
   return (
@@ -41,7 +41,7 @@ export default async function AppPage({ params }: Props) {
           "@type": "BreadcrumbList",
           itemListElement: [
             { "@type": "ListItem", position: 1, name: site.name, item: `${site.url}/` },
-            { "@type": "ListItem", position: 2, name: app.name, item: `${site.url}/ung-dung/${app.id}` },
+            { "@type": "ListItem", position: 2, name: app.name, item: `${site.url}/apps/${app.slug}` },
           ],
         }}
       />

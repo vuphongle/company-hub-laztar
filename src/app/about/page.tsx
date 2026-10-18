@@ -7,7 +7,7 @@ export const metadata = publicPageMetadata({
   title: "LAZTAR là gì? Giới thiệu LAZTAR Hub và các dự án",
   description:
     "Tìm hiểu LAZTAR Hub, nơi tập hợp Ma Sói, Office Jukebox, Sao kê và các dự án nội bộ để cùng trải nghiệm, góp ý và đóng góp mã nguồn.",
-  path: "/gioi-thieu",
+  path: "/about",
 });
 
 export default function AboutPage() {
@@ -28,7 +28,7 @@ export default function AboutPage() {
         <ul>
           {apps.map((app) => (
             <li key={app.id}>
-              <Link href={`/ung-dung/${app.id}`}>{app.name}</Link>: {app.description}
+              <Link href={`/apps/${app.slug}`}>{app.name}</Link>: {app.description}
             </li>
           ))}
         </ul>

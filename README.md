@@ -126,6 +126,7 @@ Mở `src/data/apps.ts` và thêm một object vào mảng `apps`:
 ```ts
 {
   id: "project-slug",
+  slug: "project-name",
   name: "Project Name",
   description: "Mô tả ngắn giúp nhân viên hiểu app dùng để làm gì.",
   url: "https://project.company.example",
@@ -138,8 +139,12 @@ Mở `src/data/apps.ts` và thêm một object vào mảng `apps`:
 UI, search, filter và dropdown chọn project trong form feedback tự đọc từ nguồn dữ liệu này. Nếu cần icon/category mới, mở rộng union trong cùng file và mapping icon tại `src/components/app-directory.tsx`.
 
 Thêm nội dung tương ứng theo `id` vào `src/data/app-guides.ts` với `overview`,
-`highlights`, `steps`, `note`. Trang `/ung-dung/<id>` được dựng sẵn và tự đưa vào
+`highlights`, `steps`, `note`. Trang `/apps/<slug>` được dựng sẵn và tự đưa vào
 sitemap; nội dung cần mô tả đúng chức năng và điều kiện truy cập của ứng dụng.
+
+`slug` là đường dẫn công khai bằng tiếng Anh; `id` là định danh ổn định cho
+feedback và dữ liệu hướng dẫn. Khi đổi URL đã công bố, thêm redirect vĩnh viễn
+trong `next.config.ts` để liên kết cũ tiếp tục hoạt động.
 
 ## Kiểm tra chất lượng
 

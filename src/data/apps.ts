@@ -7,6 +7,7 @@ export type AppIconName = "wolf" | "music" | "receipt";
 
 export type CompanyApp = {
   id: string;
+  slug: string;
   name: string;
   description: string;
   url: string;
@@ -19,6 +20,7 @@ export type CompanyApp = {
 export const apps: CompanyApp[] = [
   {
     id: "ma-soi",
+    slug: "werewolf",
     name: "Ma Sói",
     description:
       "Chơi Ma Sói online cùng nhóm bạn và đồng nghiệp với quản trò tự động của LAZTAR.",
@@ -29,6 +31,7 @@ export const apps: CompanyApp[] = [
   },
   {
     id: "office-jukebox",
+    slug: "office-jukebox",
     name: "Office Jukebox",
     description:
       "Ứng dụng chọn nhạc và bình chọn bài hát để cả văn phòng cùng quyết định nghe gì.",
@@ -40,6 +43,7 @@ export const apps: CompanyApp[] = [
   },
   {
     id: "sao-ke",
+    slug: "statements",
     name: "Sao kê",
     description:
       "Dự án thử nghiệm dashboard lì xì và sao kê với cách trình bày minh bạch, vui nhộn.",
@@ -53,4 +57,8 @@ export const apps: CompanyApp[] = [
 
 export function getAppById(id: string) {
   return apps.find((app) => app.id === id);
+}
+
+export function getAppBySlug(slug: string) {
+  return apps.find((app) => app.slug === slug);
 }

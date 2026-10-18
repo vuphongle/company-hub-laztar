@@ -34,7 +34,7 @@ export default function HomePage() {
                 "@type": "ListItem",
                 position: index + 1,
                 name: app.name,
-                url: `${site.url}/ung-dung/${app.id}`,
+                url: `${site.url}/apps/${app.slug}`,
               })),
             },
           ],

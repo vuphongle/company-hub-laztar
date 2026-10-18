@@ -2,7 +2,6 @@ import assert from "node:assert/strict";
 
 import nextEnv from "@next/env";
 
-import { apps } from "../src/data/apps";
 import { site } from "../src/config/site";
 
 nextEnv.loadEnvConfig(process.cwd());
@@ -10,7 +9,14 @@ nextEnv.loadEnvConfig(process.cwd());
 const baseUrl = new URL(
   process.env.SEO_TEST_BASE_URL ?? `http://localhost:${process.env.PORT ?? "3000"}`,
 );
-const publicPaths = ["/", "/gioi-thieu", ...apps.map((app) => `/ung-dung/${app.id}`)];
+const appPaths = ["/apps/werewolf", "/apps/office-jukebox", "/apps/statements"];
+const publicPaths = ["/", "/about", ...appPaths];
+const legacyRedirects = [
+  ["/gioi-thieu", "/about"],
+  ["/ung-dung/ma-soi", "/apps/werewolf"],
+  ["/ung-dung/office-jukebox", "/apps/office-jukebox"],
+  ["/ung-dung/sao-ke", "/apps/statements"],
+];
 
 async function get(path: string) {
   return fetch(new URL(path, baseUrl), {
@@ -38,6 +44,7 @@ for (const path of publicPaths) {
   const response = await get(path);
   assert.equal(response.status, 200, `${path}: HTTP status`);
   const html = await response.text();
+  assert(!/href="\/(?:gioi-thieu|ung-dung)(?:[/?"#])/.test(html), `${path}: legacy internal link`);
   const head = html.split("</head>")[0];
   const title = head.match(/<title>([^<]+)<\/title>/)?.[1];
   assert(title && !titles.has(title), `${path}: missing or duplicate title`);
@@ -61,16 +68,26 @@ for (const path of publicPaths) {
     .map((match) => JSON.parse(match[1]));
   if (path === "/") {
     assert(data.some((item) => item["@graph"]?.some((node: Record<string, string>) => node["@type"] === "WebSite")), "Missing WebSite data");
-    for (const app of apps) {
-      assert(html.includes(`href="/ung-dung/${app.id}"`), `Missing crawlable link: ${app.id}`);
+    for (const appPath of appPaths) {
+      assert(html.includes(`href="${appPath}"`), `Missing crawlable link: ${appPath}`);
     }
+    const itemList = data.flatMap((item) => item["@graph"] ?? [])
+      .find((item) => item["@type"] === "ItemList");
+    assert(itemList, "Missing app ItemList data");
+    assert.deepEqual(
+      itemList.itemListElement.map((item: { url: string }) => item.url).sort(),
+      appPaths.map((path) => `${site.url}${path}`).sort(),
+      "App structured data URLs",
+    );
     const localImage = new URL(imageUrl);
     const imageResponse = await get(localImage.pathname + localImage.search);
     assert.equal(imageResponse.status, 200, "Open Graph image status");
     assert(imageResponse.headers.get("content-type")?.startsWith("image/png"), "Open Graph image type");
     assert((await imageResponse.arrayBuffer()).byteLength > 1000, "Open Graph image is empty");
-  } else if (path.startsWith("/ung-dung/")) {
-    assert(data.some((item) => item["@type"] === "BreadcrumbList"), `${path}: missing breadcrumb data`);
+  } else if (path.startsWith("/apps/")) {
+    const breadcrumb = data.find((item) => item["@type"] === "BreadcrumbList");
+    assert(breadcrumb, `${path}: missing breadcrumb data`);
+    assert.equal(breadcrumb.itemListElement.at(-1).item, `${site.url}${path}`, `${path}: breadcrumb URL`);
   }
 }
 
@@ -93,8 +110,20 @@ for (const path of ["/feedback", "/admin/login"]) {
   assert.equal(response.status, 200, `${path}: status`);
   assert(meta(await response.text(), "robots")?.includes("noindex"), `${path}: missing noindex`);
 }
-for (const path of ["/seo-check-missing-page", "/ung-dung/seo-check-missing-app"]) {
+for (const [source, destination] of legacyRedirects) {
+  const response = await get(source);
+  assert.equal(response.status, 308, `${source}: permanent redirect status`);
+  assert.equal(new URL(response.headers.get("location") ?? "", baseUrl).href, new URL(destination, baseUrl).href, `${source}: redirect destination`);
+}
+const queryRedirect = await get("/gioi-thieu?source=legacy&query=hello%20world");
+assert.equal(queryRedirect.status, 308, "Legacy query redirect status");
+const queryLocation = new URL(queryRedirect.headers.get("location") ?? "", baseUrl);
+assert.equal(queryLocation.pathname, "/about", "Legacy query redirect path");
+assert.equal(queryLocation.searchParams.get("source"), "legacy", "Legacy source query preserved");
+assert.equal(queryLocation.searchParams.get("query"), "hello world", "Legacy encoded query preserved");
+
+for (const path of ["/seo-check-missing-page", "/apps/seo-check-missing-app", "/ung-dung/seo-check-missing-app"]) {
   assert.equal((await get(path)).status, 404, `${path}: expected real 404`);
 }
 
-console.log(`SEO checks passed: ${publicPaths.length} public pages, metadata, JSON-LD, image, robots, sitemap, noindex and 404s.`);
+console.log(`SEO checks passed: ${publicPaths.length} English public URLs, metadata, JSON-LD, image, robots, sitemap, noindex, 308 redirects and 404s.`);
