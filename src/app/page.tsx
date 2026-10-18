@@ -126,7 +126,7 @@ export default function HomePage() {
       </section>
 
       <section className="faq-section" aria-labelledby="faq-title">
-        <div className="shell narrow-shell">
+        <div className="shell">
           <div className="page-heading">
             <p className="eyebrow">Câu hỏi thường gặp</p>
             <h2 id="faq-title">Tìm nhanh thông tin về các ứng dụng LAZTAR</h2>
