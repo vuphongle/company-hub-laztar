@@ -90,12 +90,18 @@ export default function HomePage() {
         </div>
         <div className="hero-marquee" aria-hidden="true">
           <div>
-            PLAY <i>✳</i> BUILD <i>✳</i> EXPERIMENT <i>✳</i> SHARE{" "}
-            <i>✳</i>{" "}
+            {Array.from({ length: 3 }, (_, index) => (
+              <span className="hero-marquee-copy" key={index}>
+                PLAY <i>✳</i> BUILD <i>✳</i> EXPERIMENT <i>✳</i> SHARE <i>✳</i>{" "}
+              </span>
+            ))}
           </div>
           <div>
-            PLAY <i>✳</i> BUILD <i>✳</i> EXPERIMENT <i>✳</i> SHARE{" "}
-            <i>✳</i>{" "}
+            {Array.from({ length: 3 }, (_, index) => (
+              <span className="hero-marquee-copy" key={index}>
+                PLAY <i>✳</i> BUILD <i>✳</i> EXPERIMENT <i>✳</i> SHARE <i>✳</i>{" "}
+              </span>
+            ))}
           </div>
         </div>
       </section>

@@ -6,6 +6,15 @@ import { useEffect, useRef, type ReactNode } from "react";
 export function PlaygroundMotion({ children }: { children: ReactNode }) {
   const rootRef = useRef<HTMLDivElement>(null);
   useEffect(() => {
+    const marquee = rootRef.current?.querySelector(".hero-marquee");
+    if (!marquee) return;
+    const observer = new IntersectionObserver(([entry]) => {
+      marquee.classList.toggle("is-in-view", entry.isIntersecting);
+    });
+    observer.observe(marquee);
+    return () => observer.disconnect();
+  }, []);
+  useEffect(() => {
     let disposed = false;
     let cleanup: (() => void) | undefined;
     Promise.all([import("gsap"), import("gsap/ScrollTrigger")]).then(

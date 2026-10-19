@@ -188,6 +188,21 @@ try {
     reducedMotion: "reduce",
   });
   await mobile.goto(baseUrl, { waitUntil: "domcontentloaded" });
+  const mobileMenuButton = mobile.getByRole("button", { name: "Mở menu" });
+  await expect(mobileMenuButton).toBeVisible();
+  await expect(mobile.getByRole("navigation", { name: "Điều hướng chính" })).toBeHidden();
+  await mobileMenuButton.tap();
+  await expect(mobile.getByRole("button", { name: "Đóng menu" })).toBeVisible();
+  await expect(mobile.getByRole("navigation", { name: "Điều hướng chính" })).toBeVisible();
+  await expect(mobile.getByRole("link", { name: "Projects" })).toBeFocused();
+  await mobile.keyboard.press("Escape");
+  await expect(mobile.getByRole("dialog")).not.toBeVisible();
+  await expect(mobile.getByRole("button", { name: "Mở menu" })).toBeFocused();
+  await mobileMenuButton.tap();
+  await mobile.getByRole("link", { name: "Góp ý", exact: true }).tap();
+  await expect(mobile).toHaveURL(/\/feedback$/);
+  await mobile.goBack();
+  await expect(mobile.getByRole("button", { name: "Mở menu" })).toBeVisible();
   await mobile
     .getByRole("group", { name: "Chọn project xem trước" })
     .getByRole("button", { name: /Ma Sói/ })
@@ -238,8 +253,8 @@ try {
   const mobileLayout = await mobile.evaluate(() => ({
     scrollWidth: document.documentElement.scrollWidth,
     viewport: window.innerWidth,
-    adminVisible: [...document.querySelectorAll(".primary-nav a")].some(
-      (link) => link.textContent?.includes("Admin"),
+    adminVisible: [...document.querySelectorAll(".primary-nav a")].some((link) =>
+      link.textContent?.includes("Admin"),
     ),
     cards: document.querySelectorAll(".app-card").length,
   }));

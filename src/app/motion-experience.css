@@ -1,5 +1,4 @@
 /* Motion-first: sticky stages provide native scroll distance; JS owns only transforms. */
-.hero-marquee > div,
 .vinyl-disc,
 .equalizer i {
   animation: none !important;

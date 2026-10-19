@@ -988,8 +988,15 @@ main {
   gap: 0;
 }
 .hero-marquee div {
-  min-width: max-content;
-  animation: marquee 22s linear infinite;
+  display: flex;
+  flex: 0 0 max-content;
+  min-width: 100%;
+  justify-content: space-around;
+  animation: marquee 66s linear infinite;
+  padding-inline-end: 0;
+}
+.hero-marquee-copy {
+  display: inline-block;
   padding-inline-end: 2rem;
 }
 .hero-marquee i {
@@ -1222,7 +1229,7 @@ main {
   animation-play-state: paused;
 }
 
-.hero-section.is-in-view .hero-marquee div,
+.hero-marquee.is-in-view div,
 .hero-section.is-in-view .scene-orbit {
   animation-play-state: running;
 }
@@ -1338,6 +1345,7 @@ main {
 
 .feedback-type-grid {
   display: grid;
+  grid-auto-rows: 1fr;
   gap: 0.75rem;
 }
 
@@ -1354,6 +1362,7 @@ main {
 
 .choice-card-body {
   min-height: 5.25rem;
+  height: 100%;
   display: grid;
   grid-template-columns: auto minmax(0, 1fr);
   align-items: center;
