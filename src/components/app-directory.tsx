@@ -8,8 +8,11 @@ import {
   MusicNotes,
   Receipt,
 } from "@phosphor-icons/react";
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import Link from "next/link";
+
+import { useWorldMotion } from "@/components/world-motion";
+import { ProjectWorld } from "@/components/project-world";
 
 import {
   appCategories,
@@ -25,57 +28,103 @@ const statusLabels = {
 } as const;
 
 function AppGlyph({ name }: { name: AppIconName }) {
-  const iconProps = { size: 30, weight: "duotone" as const, "aria-hidden": true };
+  const iconProps = {
+    size: 30,
+    weight: "duotone" as const,
+    "aria-hidden": true,
+  };
 
   if (name === "music") return <MusicNotes {...iconProps} />;
   if (name === "receipt") return <Receipt {...iconProps} />;
   return <GameController {...iconProps} />;
 }
 
+const chapterCopy = {
+  wolf: {
+    number: "01",
+    word: "TRUST\nNO ONE.",
+    kicker: "Khi văn phòng tắt đèn",
+  },
+  music: {
+    number: "02",
+    word: "FIND YOUR\nFREQUENCY.",
+    kicker: "Chuyển sang một tần số khác",
+  },
+  receipt: {
+    number: "03",
+    word: "MAKE DATA\nLESS BORING.",
+    kicker: "Và một chút không nghiêm túc",
+  },
+};
+
 function AppCard({ app }: { app: CompanyApp }) {
+  const chapter = chapterCopy[app.icon];
+  const ref = useRef<HTMLElement>(null);
+  useWorldMotion(ref, app.icon);
   return (
-    <article className={`app-card app-card-${app.icon}`}>
-      <div className="app-card-topline">
-        <span className={`app-icon app-icon-${app.icon}`}>
-          <AppGlyph name={app.icon} />
-        </span>
-        <span className={`status-badge status-${app.status}`}>
-          {statusLabels[app.status]}
-        </span>
-      </div>
-      <div className="app-card-copy">
-        <p className="eyebrow">{app.category}</p>
-        <h3>{app.name}</h3>
-        <p>{app.description}</p>
-        <Link className="text-link" href={`/apps/${app.slug}`}>
-          Tìm hiểu {app.name}
-        </Link>
-      </div>
-      <div className="app-card-actions">
-        <a
-          className="button button-primary app-open-button"
-          href={app.url}
-          target="_blank"
-          rel="noreferrer"
-          aria-label={`Mở ${app.name} trong tab mới`}
-        >
-          Mở app
-          <ArrowUpRight size={18} aria-hidden="true" />
-        </a>
-        {app.githubUrl && (
-          <a
-            className="app-github-link"
-            href={app.githubUrl}
-            target="_blank"
-            rel="noreferrer"
-            aria-label={`Xem repository GitHub của ${app.name} trong tab mới`}
-          >
-            <GithubLogo size={18} weight="bold" aria-hidden="true" />
-            GitHub
-          </a>
-        )}
-      </div>
-    </article>
+    <div
+      className={`chapter-runway chapter-runway-${app.icon}`}
+      data-world={app.icon}
+    >
+      <article
+        ref={ref}
+        className={`app-card app-card-${app.icon}`}
+        data-motion-region
+      >
+        <div className="chapter-index">
+          <span>CHAPTER / {chapter.number}</span>
+          <span>{chapter.kicker}</span>
+        </div>
+        <div className="chapter-visual">
+          <div className="chapter-word" aria-hidden="true">
+            {chapter.word}
+          </div>
+          <ProjectWorld icon={app.icon} />
+        </div>
+        <div className="chapter-content">
+          <div className="app-card-topline">
+            <span className={`app-icon app-icon-${app.icon}`}>
+              <AppGlyph name={app.icon} />
+            </span>
+            <span className={`status-badge status-${app.status}`}>
+              {statusLabels[app.status]}
+            </span>
+          </div>
+          <div className="app-card-copy">
+            <p className="eyebrow">{app.category}</p>
+            <h3>{app.name}</h3>
+            <p>{app.description}</p>
+            <Link className="text-link" href={`/apps/${app.slug}`}>
+              Tìm hiểu {app.name}
+            </Link>
+          </div>
+          <div className="app-card-actions">
+            <a
+              className="button button-primary app-open-button"
+              href={app.url}
+              target="_blank"
+              rel="noreferrer"
+              aria-label={`Mở app ${app.name} trong tab mới`}
+            >
+              Mở app
+              <ArrowUpRight size={18} aria-hidden="true" />
+            </a>
+            {app.githubUrl && (
+              <a
+                className="app-github-link"
+                href={app.githubUrl}
+                target="_blank"
+                rel="noreferrer"
+                aria-label={`Xem repository GitHub của ${app.name} trong tab mới`}
+              >
+                <GithubLogo size={18} weight="bold" aria-hidden="true" />
+                GitHub
+              </a>
+            )}
+          </div>
+        </div>
+      </article>
+    </div>
   );
 }
 
@@ -97,14 +146,21 @@ export function AppDirectory({ apps }: { apps: CompanyApp[] }) {
     });
   }, [apps, category, query]);
 
+  useEffect(() => {
+    window.dispatchEvent(new Event("laztar:layout-change"));
+  }, [filteredApps.length, category, query]);
+
   return (
     <section className="directory-section" aria-labelledby="directory-title">
       <div className="section-heading">
         <div>
-          <p className="eyebrow">App directory</p>
-          <h2 id="directory-title">Hôm nay mình build gì, chơi gì?</h2>
+          <p className="eyebrow">The playground / 03 worlds</p>
+          <h2 id="directory-title">Một cú click.{"\n"}Một thế giới khác.</h2>
         </div>
-        <p>Những project nội bộ để mở ra, thử nghiệm và cùng làm tốt hơn.</p>
+        <p>
+          Từ một đêm đầy nghi ngờ, qua playlist của văn phòng, đến dữ liệu biết
+          đùa. Chọn lối vào của bạn.
+        </p>
       </div>
 
       <div className="directory-controls">
@@ -122,7 +178,9 @@ export function AppDirectory({ apps }: { apps: CompanyApp[] }) {
         <div className="filter-chips" aria-label="Lọc theo category">
           <button
             type="button"
-            className={category === "all" ? "filter-chip active" : "filter-chip"}
+            className={
+              category === "all" ? "filter-chip active" : "filter-chip"
+            }
             aria-pressed={category === "all"}
             onClick={() => setCategory("all")}
           >
@@ -131,7 +189,9 @@ export function AppDirectory({ apps }: { apps: CompanyApp[] }) {
           {appCategories.map((item) => (
             <button
               type="button"
-              className={category === item ? "filter-chip active" : "filter-chip"}
+              className={
+                category === item ? "filter-chip active" : "filter-chip"
+              }
               aria-pressed={category === item}
               onClick={() => setCategory(item)}
               key={item}

@@ -18,9 +18,15 @@ export default async function AdminLoginPage() {
     <section className="page-section login-page">
       <div className="shell login-shell">
         <div className="login-copy">
-          <p className="eyebrow">Private area</p>
-          <h1>Quản lý feedback gọn gàng, không cần một dashboard khổng lồ.</h1>
-          <p>Chỉ tài khoản đã được thêm vào danh sách admin mới có thể truy cập.</p>
+          <p className="eyebrow">LAZTAR / khu vực quản trị</p>
+          <h1>
+            Một inbox.
+            <br />
+            Nhiều ý tưởng.
+          </h1>
+          <p>
+            Chỉ tài khoản đã được thêm vào danh sách admin mới có thể truy cập.
+          </p>
           <Link className="text-link" href="/">
             ← Quay lại LAZTAR Hub
           </Link>
@@ -28,7 +34,7 @@ export default async function AdminLoginPage() {
 
         <div className="login-panel">
           <h2>Admin login</h2>
-          <p>Dùng tài khoản admin được lưu an toàn trong database nội bộ.</p>
+          <p>Đăng nhập bằng tài khoản đã được cấp quyền.</p>
           <LoginForm />
         </div>
       </div>
