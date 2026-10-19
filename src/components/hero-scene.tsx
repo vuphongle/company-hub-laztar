@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useEffect, useRef, useState, type CSSProperties } from "react";
 
 import { LivingArtwork } from "@/components/living-artwork";
+import { ArrowMark } from "@/components/arrow-mark";
 import type { CompanyApp } from "@/data/apps";
 
 export function HeroScene({ apps }: { apps: CompanyApp[] }) {
@@ -110,14 +111,14 @@ export function HeroScene({ apps }: { apps: CompanyApp[] }) {
               </div>
               <span className="node-caption" id={`node-caption-${app.id}`}>
                 <b>0{index + 1}</b> {app.name}
-                <span aria-hidden="true">↗</span>
+                <ArrowMark />
               </span>
             </button>
           );
         })}
       </div>
       <div className="world-instruction">
-        <span aria-hidden="true">↔</span> Chọn một thế giới để đổi mood
+        <ArrowMark direction="horizontal" /> Chọn một thế giới để đổi mood
       </div>
       <div className="console-info" aria-live="polite" aria-atomic="true">
         <div>
@@ -128,7 +129,7 @@ export function HeroScene({ apps }: { apps: CompanyApp[] }) {
           href={`/apps/${selected.slug}`}
           aria-label={`Khám phá ${selected.name}`}
         >
-          Khám phá <span aria-hidden="true">↗</span>
+          Khám phá <ArrowMark />
         </Link>
       </div>
     </div>

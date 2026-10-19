@@ -8,6 +8,7 @@ import { StructuredData } from "@/components/structured-data";
 import { publicPageMetadata, site } from "@/config/site";
 import { appGuides } from "@/data/app-guides";
 import { apps, getAppBySlug } from "@/data/apps";
+import { ArrowMark } from "@/components/arrow-mark";
 
 type Props = { params: Promise<{ slug: string }> };
 
@@ -100,7 +101,7 @@ export default async function AppPage({ params }: Props) {
                   target="_blank"
                   rel="noreferrer"
                 >
-                  Mở {app.name} <span aria-hidden="true">↗</span>
+                  Mở {app.name} <ArrowMark />
                   <span className="sr-only"> trong tab mới</span>
                 </a>
                 {app.githubUrl && (
@@ -135,7 +136,7 @@ export default async function AppPage({ params }: Props) {
             <ul>
               {guide.highlights.map((item, index) => (
                 <li key={item}>
-                  <span aria-hidden="true">{["✦", "↗", "✳"][index]}</span>
+                  <span aria-hidden="true">{["✦", <ArrowMark key="arrow" />, "✳"][index]}</span>
                   <p>{item}</p>
                 </li>
               ))}
@@ -179,7 +180,7 @@ export default async function AppPage({ params }: Props) {
                 <Link href={`/apps/${item.slug}`} key={item.id}>
                   <span>{item.category}</span>
                   <strong>{item.name}</strong>
-                  <b aria-hidden="true">↗</b>
+                  <b aria-hidden="true"><ArrowMark /></b>
                 </Link>
               ))}
           </nav>

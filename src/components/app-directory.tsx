@@ -175,7 +175,11 @@ export function AppDirectory({ apps }: { apps: CompanyApp[] }) {
           />
         </label>
 
-        <div className="filter-chips" aria-label="Lọc theo category">
+        <div
+          className="filter-chips"
+          role="group"
+          aria-label="Lọc theo category"
+        >
           <button
             type="button"
             className={

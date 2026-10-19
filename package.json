@@ -14,6 +14,7 @@
     "typecheck": "tsc --noEmit",
     "test": "vitest run",
     "test:browser": "node scripts/test-browser.mjs",
+    "test:mobile-polish": "node scripts/test-mobile-polish.mjs",
     "test:integration": "tsx scripts/test-runtime.ts",
     "test:seo": "tsx scripts/check-seo.ts",
     "test:watch": "vitest",

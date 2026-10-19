@@ -14,7 +14,7 @@ const sample = (locator) => locator.evaluate((e) => ({
   motif: e.querySelector(".scene-moon,.scene-vinyl,.scene-token,.principles-orbit span,.closing-orbit span")?.getAttribute("style"),
 }));
 try {
-  for (const width of [320, 390, 768, 1440]) {
+  for (const width of [320, 375, 390, 768, 1440]) {
     const page = await browser.newPage({ viewport: { width, height: 900 } });
     page.on("pageerror", (e) => report.errors.push(e.message));
     for (const path of ["/", "/apps/werewolf", "/apps/office-jukebox", "/apps/statements", "/about", "/feedback", "/admin/login", "/missing-motion-qa"]) {
@@ -29,6 +29,18 @@ try {
         const { top, height } = await bounds(runway);
         await at(page, Math.max(0, top - 450));
         const before = await sample(runway);
+        if (selector === ".principles-section") {
+          // Sample the entrance and reversal: endpoints alone missed colliding words.
+          for (const offset of [-450, -250, 0, 200, 500, 200, 0, -450]) {
+            await at(page, top + offset);
+            const words = await runway.locator(".principles-orbit span").evaluateAll((elements) => elements.map((element) => {
+              const rect = element.getBoundingClientRect();
+              return { left: rect.left, right: rect.right };
+            }));
+            expect(words.every((word) => word.left >= 0 && word.right <= width)).toBe(true);
+            expect(words.slice(1).every((word, i) => word.left >= words[i].right)).toBe(true);
+          }
+        }
         await at(page, top + height * .5);
         const after = await sample(runway);
         expect(after).not.toEqual(before);

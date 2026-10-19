@@ -9,6 +9,7 @@ import "./globals.css";
 import "./playground.css";
 import "./public-pages.css";
 import "./motion-experience.css";
+import "./mobile-header.css";
 
 export const metadata: Metadata = {
   metadataBase: new URL(site.url),
