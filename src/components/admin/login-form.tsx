@@ -11,9 +11,13 @@ const initialState: LoginFormState = {};
 function LoginButton() {
   const { pending } = useFormStatus();
   return (
-    <button className="button button-primary submit-button" type="submit" disabled={pending}>
+    <button
+      className="button button-primary submit-button"
+      type="submit"
+      disabled={pending}
+    >
       <SignInIcon size={20} weight="bold" aria-hidden="true" />
-      {pending ? "Đang đăng nhập..." : "Đăng nhập Admin"}
+      {pending ? "Đang đăng nhập…" : "Đăng nhập Admin"}
     </button>
   );
 }

@@ -7,7 +7,10 @@ import { useFormStatus } from "react-dom";
 import { updateFeedbackStatus } from "@/features/feedback/actions";
 import { initialStatusFormState } from "@/features/feedback/form-state";
 import { feedbackStatusLabels } from "@/features/feedback/presentation";
-import { feedbackStatuses, type FeedbackStatus } from "@/features/feedback/types";
+import {
+  feedbackStatuses,
+  type FeedbackStatus,
+} from "@/features/feedback/types";
 
 function SaveStatusButton() {
   const { pending } = useFormStatus();
@@ -18,7 +21,7 @@ function SaveStatusButton() {
       ) : (
         <Check size={19} weight="bold" aria-hidden="true" />
       )}
-      {pending ? "Đang lưu..." : "Lưu trạng thái"}
+      {pending ? "Đang lưu…" : "Lưu trạng thái"}
     </button>
   );
 }

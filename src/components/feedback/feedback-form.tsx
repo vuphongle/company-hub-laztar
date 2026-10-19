@@ -18,14 +18,24 @@ import { submitFeedback } from "@/features/feedback/actions";
 import { initialFeedbackFormState } from "@/features/feedback/form-state";
 
 const feedbackOptions = [
-  { value: "bug", label: "Báo lỗi", hint: "Có gì đó chưa chạy như mong đợi", icon: BugBeetle },
+  {
+    value: "bug",
+    label: "Báo lỗi",
+    hint: "Có gì đó chưa chạy như mong đợi",
+    icon: BugBeetle,
+  },
   {
     value: "feature_request",
     label: "Đề xuất tính năng",
     hint: "Có một feature sẽ giúp mọi người dùng tốt hơn",
     icon: RocketLaunch,
   },
-  { value: "idea", label: "Có ý tưởng", hint: "Một hướng mới, một thử nghiệm hay ho", icon: Lightbulb },
+  {
+    value: "idea",
+    label: "Có ý tưởng",
+    hint: "Một hướng mới, một thử nghiệm hay ho",
+    icon: Lightbulb,
+  },
   {
     value: "contribution",
     label: "Muốn tham gia",
@@ -38,9 +48,13 @@ function SubmitButton() {
   const { pending } = useFormStatus();
 
   return (
-    <button className="button button-primary submit-button" type="submit" disabled={pending}>
+    <button
+      className="button button-primary submit-button"
+      type="submit"
+      disabled={pending}
+    >
       <PaperPlaneTilt size={20} weight="bold" aria-hidden="true" />
-      {pending ? "Đang gửi..." : "Gửi cho team"}
+      {pending ? "Đang gửi…" : "Gửi cho team"}
     </button>
   );
 }
@@ -74,7 +88,10 @@ export function FeedbackSuccess({ submissionId }: { submissionId?: string }) {
 }
 
 export function FeedbackForm() {
-  const [state, formAction] = useActionState(submitFeedback, initialFeedbackFormState);
+  const [state, formAction] = useActionState(
+    submitFeedback,
+    initialFeedbackFormState,
+  );
   const errorSummaryRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -87,7 +104,9 @@ export function FeedbackForm() {
     return <FeedbackSuccess submissionId={state.submissionId} />;
   }
 
-  const fieldErrors = Object.entries(state.errors).filter(([key]) => key !== "form");
+  const fieldErrors = Object.entries(state.errors).filter(
+    ([key]) => key !== "form",
+  );
 
   return (
     <form className="feedback-form" action={formAction} noValidate>
@@ -129,7 +148,12 @@ export function FeedbackForm() {
 
             return (
               <label className="choice-card" key={option.value}>
-                <input type="radio" name="type" value={option.value} required />
+                <input
+                  type="radio"
+                  name="type"
+                  value={option.value}
+                  required
+                />
                 <span className="choice-card-body">
                   <Icon size={24} weight="duotone" aria-hidden="true" />
                   <span>
@@ -150,7 +174,14 @@ export function FeedbackForm() {
 
       <div className="form-field">
         <label htmlFor="appId">App / project liên quan</label>
-        <select id="appId" name="appId" aria-describedby="appId-help appId-error">
+        <select
+          id="appId"
+          name="appId"
+          aria-invalid={Boolean(state.errors.appId)}
+          aria-describedby={
+            state.errors.appId ? "appId-help appId-error" : "appId-help"
+          }
+        >
           <option value="">LAZTAR Hub / Góp ý chung</option>
           {apps.map((app) => (
             <option value={app.id} key={app.id}>
@@ -179,7 +210,10 @@ export function FeedbackForm() {
           minLength={4}
           maxLength={120}
           required
-          aria-describedby="title-help title-error"
+          aria-invalid={Boolean(state.errors.title)}
+          aria-describedby={
+            state.errors.title ? "title-help title-error" : "title-help"
+          }
           placeholder="Tóm tắt idea hoặc vấn đề trong một câu ngắn"
         />
         <p className="field-help" id="title-help">
@@ -203,7 +237,10 @@ export function FeedbackForm() {
           minLength={20}
           maxLength={5000}
           required
-          aria-describedby="content-help content-error"
+          aria-invalid={Boolean(state.errors.content)}
+          aria-describedby={
+            state.errors.content ? "content-help content-error" : "content-help"
+          }
           placeholder="Kể team nghe điều bạn gặp phải, điều muốn thử hoặc cách bạn muốn góp sức..."
         />
         <p className="field-help" id="content-help">
@@ -218,7 +255,13 @@ export function FeedbackForm() {
 
       <div className="honeypot" aria-hidden="true">
         <label htmlFor="website">Website</label>
-        <input id="website" name="website" type="text" tabIndex={-1} autoComplete="off" />
+        <input
+          id="website"
+          name="website"
+          type="text"
+          tabIndex={-1}
+          autoComplete="off"
+        />
       </div>
 
       <div className="form-actions">

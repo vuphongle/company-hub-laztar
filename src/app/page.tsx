@@ -1,6 +1,9 @@
 import Link from "next/link";
 
 import { AppDirectory } from "@/components/app-directory";
+import { PlaygroundPortrait } from "@/components/playground-portrait";
+import { HeroScene } from "@/components/hero-scene";
+import { PlaygroundMotion } from "@/components/playground-motion";
 import { StructuredData } from "@/components/structured-data";
 import { publicPageMetadata, site } from "@/config/site";
 import { apps } from "@/data/apps";
@@ -13,7 +16,7 @@ export const metadata = publicPageMetadata({
 
 export default function HomePage() {
   return (
-    <>
+    <PlaygroundMotion>
       <StructuredData
         data={{
           "@context": "https://schema.org",
@@ -33,7 +36,8 @@ export default function HomePage() {
               "@type": "Organization",
               "@id": `${site.url}/#internal-team`,
               name: site.teamName,
-              description: "Nhóm nhân viên LAZTAR phát triển các dự án nội bộ và thử nghiệm.",
+              description:
+                "Nhóm nhân viên LAZTAR phát triển các dự án nội bộ và thử nghiệm.",
               parentOrganization: {
                 "@type": "Organization",
                 name: site.companyName,
@@ -53,46 +57,44 @@ export default function HomePage() {
           ],
         }}
       />
-      <section className="hero-section">
-        <div className="shell hero-grid">
-          <div className="hero-copy reveal">
-            <p className="hero-kicker">
-              <span aria-hidden="true" />
-              Ứng dụng nội bộ LAZTAR
+      <section className="hero-section" data-motion-region>
+        <div className="hero-noise" aria-hidden="true" />
+        <div className="shell hero-stage">
+          <div className="hero-copy">
+            <p className="hero-kicker" data-intro="0">
+              <span aria-hidden="true" /> LAZTAR / THE LIVING PLAYGROUND
             </p>
-            <h1>LAZTAR Hub</h1>
+            <h1 aria-label="Small ideas. Wild worlds.">
+              <span>Small ideas.</span>
+              <span>Wild worlds.</span>
+            </h1>
             <p className="hero-description">
-              Khám phá các ứng dụng và dự án của LAZTAR.
-              <span> Chơi Ma Sói online, chọn và bình chọn nhạc cùng Office Jukebox,
-                trải nghiệm dashboard Sao kê và góp ý để cùng làm các project tốt hơn.</span>
+              Ba project đang sống ở đây. Chọn một mood, chạm vào một ý tưởng,
+              xem nó đi đâu.
             </p>
-            <div className="hero-actions">
-              <a className="button button-primary" href="#directory-title">
-                Khám phá ứng dụng
-              </a>
-              <Link className="button button-secondary" href="/feedback">
-                Góp ý hoặc tham gia
-              </Link>
-            </div>
           </div>
-
-          <div className="hero-visual reveal reveal-delay" aria-hidden="true">
-            <div className="orbit orbit-one" />
-            <div className="orbit orbit-two" />
-            <div className="hero-window">
-              <div className="window-bar">
-                <span />
-                <span />
-                <span />
-              </div>
-              <div className="window-content">
-                <div className="mini-card mini-card-orange">Play</div>
-                <div className="mini-card mini-card-blue">Build</div>
-                <div className="mini-card mini-card-green">Share</div>
-              </div>
-            </div>
-            <span className="spark spark-one">+</span>
-            <span className="spark spark-two">+</span>
+          <HeroScene apps={apps} />
+          <div className="hero-footerline" data-intro="3">
+            <span>
+              <strong>{String(apps.length).padStart(2, "0")}</strong> project
+              đang live
+            </span>
+            <a className="hero-jump" href="#directory-title">
+              Đi vào playground <span aria-hidden="true">↓</span>
+            </a>
+            <Link className="hero-feedback" href="/feedback">
+              Ném một idea ↗
+            </Link>
+          </div>
+        </div>
+        <div className="hero-marquee" aria-hidden="true">
+          <div>
+            PLAY <i>✳</i> BUILD <i>✳</i> EXPERIMENT <i>✳</i> SHARE{" "}
+            <i>✳</i>{" "}
+          </div>
+          <div>
+            PLAY <i>✳</i> BUILD <i>✳</i> EXPERIMENT <i>✳</i> SHARE{" "}
+            <i>✳</i>{" "}
           </div>
         </div>
       </section>
@@ -101,26 +103,82 @@ export default function HomePage() {
         <AppDirectory apps={apps} />
       </div>
 
-      <section className="discovery-section" aria-labelledby="discovery-title">
-        <div className="shell discovery-grid">
-          <div>
-            <p className="eyebrow">LAZTAR Hub là gì?</p>
-            <h2 id="discovery-title">Một nơi để chơi, build và chia sẻ app nội bộ</h2>
+      <section
+        className="principles-section"
+        aria-labelledby="principles-title"
+      >
+        <div className="principles-sticky shell">
+          <div className="principles-orbit" aria-hidden="true"><span>PLAY</span><span>BUILD</span><span>SHARE</span></div>
+          <div className="principles-intro">
+            <p className="eyebrow">There is always room for one more</p>
+            <h2 id="principles-title">
+              Thế giới tiếp theo?
+              <br />
+              <em>Bắt đầu từ bạn.</em>
+            </h2>
+            <p>
+              Từ một ý tưởng nhỏ đến một app có thể dùng cùng nhau. Chơi thử,
+              góp một ý, hoặc mang đến một project mới cho playground.
+            </p>
           </div>
-          <div className="discovery-copy">
+          <div className="principles-list">
+            <div className="principle-row">
+              <span>01</span>
+              <strong>Play first</strong>
+              <p>
+                Mở app nhanh. Hiểu nó bằng cách dùng, không cần slide giới
+                thiệu.
+              </p>
+              <b>↗</b>
+            </div>
+            <div className="principle-row">
+              <span>02</span>
+              <strong>Build in public</strong>
+              <p>Thử nghiệm nhỏ, feedback thật, thay đổi ngay khi còn dễ.</p>
+              <b>↗</b>
+            </div>
+            <div className="principle-row">
+              <span>03</span>
+              <strong>Share the spark</strong>
+              <p>
+                Một idea hay chỉ có giá trị khi người khác có thể chạm vào nó.
+              </p>
+              <b>↗</b>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section className="discovery-section" aria-labelledby="discovery-title">
+        <div className="shell home-about">
+          <div className="home-about-heading">
+            <p className="eyebrow">Không gian chung của team</p>
+            <h2 id="discovery-title">
+              Build một thứ.
+              <br />
+              Mở ra cho mọi người.
+            </h2>
+          </div>
+          <PlaygroundPortrait />
+          <div className="home-about-copy">
             <p>
-              <strong>LAZTAR Hub</strong> là dự án nội bộ do nhân viên và thành viên của <a className="text-link" href={site.companyUrl}>LAZTAR</a>
-              xây dựng để thử nghiệm và chia sẻ các ứng dụng web, game và công cụ.
-              Đây không phải website giới thiệu công ty hay dịch vụ; thông tin về công ty và dịch vụ được cung cấp tại <a className="text-link" href={site.companyUrl}>laztar.com</a>.
+              LAZTAR Hub là góc thử nghiệm nội bộ do nhân viên và thành viên
+              LAZTAR xây dựng. Game, âm nhạc, dashboard: mỗi project bắt đầu từ
+              một điều team muốn thử.
             </p>
-            <p>
-              Muốn chơi Ma Sói online với bạn bè hoặc đồng nghiệp? Hãy thử phiên bản
-              có quản trò tự động. Muốn cả văn phòng cùng chọn nhạc? Office Jukebox
-              hỗ trợ chọn bài và bình chọn trong một danh sách chung.
-            </p>
-            <Link className="text-link" href="/about">
-              Đọc thêm về LAZTAR Hub
-            </Link>
+            <div>
+              <p>
+                Khám phá app, chia sẻ feedback, hoặc mang đến một ý tưởng mới.
+                Thông tin về công ty và dịch vụ ở{" "}
+                <a className="text-link" href={site.companyUrl}>
+                  laztar.com
+                </a>
+                .
+              </p>
+              <Link className="text-link" href="/about">
+                Câu chuyện của playground ↗
+              </Link>
+            </div>
           </div>
         </div>
       </section>
@@ -135,29 +193,36 @@ export default function HomePage() {
             <details>
               <summary>LAZTAR Hub là gì?</summary>
               <p>
-                LAZTAR Hub là danh mục các ứng dụng nội bộ và dự án thử nghiệm của
-                LAZTAR, gồm game, công cụ âm nhạc và các trải nghiệm web.
+                LAZTAR Hub là danh mục các ứng dụng nội bộ và dự án thử nghiệm
+                của LAZTAR, gồm game, công cụ âm nhạc và các trải nghiệm web.
               </p>
             </details>
             <details>
               <summary>Ma Sói của LAZTAR có chơi online được không?</summary>
               <p>
-                Có. Trang giới thiệu Ma Sói dẫn tới game web để nhóm bạn hoặc đồng
-                nghiệp chuẩn bị và chơi một ván với quản trò tự động.
+                Có. Trang giới thiệu Ma Sói dẫn tới game web để nhóm bạn hoặc
+                đồng nghiệp chuẩn bị và chơi một ván với quản trò tự động.
               </p>
             </details>
             <details>
               <summary>Office Jukebox dùng để làm gì?</summary>
               <p>
-                Office Jukebox giúp mọi người trong văn phòng cùng chọn bài hát và
-                bình chọn danh sách nhạc chung. Quyền truy cập tùy cấu hình nội bộ.
+                Office Jukebox giúp mọi người trong văn phòng cùng chọn bài hát
+                và bình chọn danh sách nhạc chung. Quyền truy cập tùy cấu hình
+                nội bộ.
               </p>
             </details>
             <details>
-              <summary>LAZTAR Hub có phải website chính của LAZTAR không?</summary>
+              <summary>
+                LAZTAR Hub có phải website chính của LAZTAR không?
+              </summary>
               <p>
-                Không. Đây là dự án nội bộ để thử nghiệm và chia sẻ ứng dụng. Thông tin
-                về công ty và dịch vụ được đăng trên <a className="text-link" href={site.companyUrl}>laztar.com</a>.
+                Không. Đây là dự án nội bộ để thử nghiệm và chia sẻ ứng dụng.
+                Thông tin về công ty và dịch vụ được đăng trên{" "}
+                <a className="text-link" href={site.companyUrl}>
+                  laztar.com
+                </a>
+                .
               </p>
             </details>
           </div>
@@ -165,17 +230,27 @@ export default function HomePage() {
       </section>
 
       <section className="feedback-cta">
-        <div className="shell feedback-cta-card">
+        <div className="closing-stage shell">
+        <div className="closing-orbit" aria-hidden="true"><i /><i /><i /><span>✳</span></div>
+        <div className="feedback-cta-card">
           <div>
             <p className="eyebrow">Cùng làm cho Hub hay hơn</p>
-            <h2>Đây là project của mọi người. Có idea thì góp vào.</h2>
-            <p className="feedback-cta-copy">Báo lỗi, đề xuất feature, ném vào một idea hay nói với team rằng bạn muốn tham gia.</p>
+            <h2>
+              Ý tưởng tiếp theo.
+              <br />
+              Có thể là của bạn.
+            </h2>
+            <p className="feedback-cta-copy">
+              Báo lỗi, đề xuất feature, ném vào một idea hay nói với team rằng
+              bạn muốn tham gia.
+            </p>
           </div>
           <Link className="button button-dark" href="/feedback">
-            Góp một ý
+            Góp một ý <span aria-hidden="true">↗</span>
           </Link>
         </div>
+        </div>
       </section>
-    </>
+    </PlaygroundMotion>
   );
 }

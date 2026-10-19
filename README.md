@@ -20,8 +20,14 @@ LAZTAR Hub là dự án nội bộ do nhân viên và thành viên LAZTAR xây d
 - Next.js 16 App Router, React 19, TypeScript
 - SQLite, Drizzle ORM và Drizzle migrations
 - Argon2id cho password hash, opaque database session cho admin
-- CSS thuần với semantic design tokens
-- Vitest + ESLint
+- CSS thuần với semantic design tokens và GSAP/ScrollTrigger cho scroll choreography
+- Vitest + ESLint + Playwright Chromium cho regression browser
+
+## Frontend structure
+
+- `globals.css`: tokens, base UI và utility controls; `playground.css`: hero/miniatures và discovery; `public-pages.css`: project/About/Feedback/footer; `motion-experience.css`: scroll-stage composition và responsive/reduced-motion rules. Thứ tự import trong root layout là thứ tự cascade.
+- `PlaygroundMotion`: lifecycle và timelines theo section. `useWorldMotion`: shared project scene choreography cho homepage và detail pages. GSAP được tải động, timeline cleanup thuộc component; search/filter yêu cầu refresh sau React commit.
+- `public/artwork/` và `public/brand-mark.webp` là assets production. Evidence QA, request chứa credentials, database và browser reports được giữ local và ignored.
 
 ## Local Development
 
@@ -160,6 +166,15 @@ npm run typecheck
 npm test
 npm run build
 ```
+
+Kiểm tra motion và tương tác trong browser production:
+
+```bash
+BASE_URL=http://localhost:3000 npm run test:browser
+BASE_URL=http://localhost:3000 npm run test:motion
+```
+
+`test:motion` kiểm tra scroll choreography, reverse scroll, resize, search/filter remounts, back/forward và reduced motion ở các viewport chính.
 
 Với application đang chạy bằng `npm run dev` hoặc `npm run start`, chạy thêm:
 

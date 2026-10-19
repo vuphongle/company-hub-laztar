@@ -34,3 +34,11 @@ next-env.d.ts
 /docs/superpowers/
 /AGENTS.md
 /CLAUDE.md
+
+# Local image service request (contains credentials)
+/curl-tmp.txt
+
+# Local visual QA evidence and browser reports (kept locally, not release inputs)
+/docs/visual-qa/
+/playwright-report/
+/test-results/

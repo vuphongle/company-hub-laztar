@@ -1,5 +1,7 @@
 import Link from "next/link";
 
+import { PlaygroundPortrait } from "@/components/playground-portrait";
+import { PlaygroundMotion } from "@/components/playground-motion";
 import { StructuredData } from "@/components/structured-data";
 import { publicPageMetadata } from "@/config/site";
 import { site } from "@/config/site";
@@ -14,62 +16,118 @@ export const metadata = publicPageMetadata({
 
 export default function AboutPage() {
   return (
-    <section className="page-section">
-      <StructuredData
-        data={{
-          "@context": "https://schema.org",
-          "@type": "AboutPage",
-          "@id": `${site.url}/about#about-page`,
-          url: `${site.url}/about`,
-          name: "LAZTAR Hub là gì?",
-          about: { "@id": `${site.url}/#website` },
-          isPartOf: { "@id": `${site.url}/#website` },
-          publisher: { "@id": `${site.url}/#internal-team` },
-        }}
-      />
-      <article className="shell narrow-shell content-page">
-        <div className="page-heading">
-          <p className="eyebrow">Giới thiệu</p>
-          <h1>LAZTAR Hub là gì?</h1>
-          <p>Không gian thử nghiệm nội bộ do nhân viên và thành viên LAZTAR xây dựng.</p>
-        </div>
-        <p>
-          LAZTAR Hub tại laztar.xyz là dự án nội bộ do nhân viên và thành viên <a className="text-link" href={site.companyUrl}>LAZTAR</a>
-          xây dựng cho việc chơi, làm việc và thử nghiệm cùng nhau. Bạn có thể
-          tìm ứng dụng theo tên, lọc theo nhóm và mở từng dự án từ một nơi.
-        </p>
-        <p>
-          Hub không thay thế website giới thiệu công ty hoặc dịch vụ của LAZTAR. Hãy xem
-          <a className="text-link" href={site.companyUrl}> laztar.com</a> để tìm thông tin chính thức về doanh nghiệp.
-        </p>
-        <h2>Các dự án trên LAZTAR Hub</h2>
-        <ul>
-          {apps.map((app) => (
-            <li key={app.id}>
-              <Link href={`/apps/${app.slug}`}>{app.name}</Link>: {app.description}
-            </li>
-          ))}
-        </ul>
-        <h2>Ai có thể sử dụng?</h2>
-        <p>
-          Bạn có thể xem danh mục và phần giới thiệu dự án ngay trên website.
-          Các ứng dụng được phát triển cho nhu cầu của nhóm và đồng nghiệp;
-          một số ứng dụng có thể yêu cầu quyền truy cập riêng.
-        </p>
-        <h2>Góp ý và tham gia xây dựng</h2>
-        <p>
-          Hub tiếp nhận báo lỗi, đề xuất tính năng, ý tưởng mới và mong muốn tham gia
-          dự án qua <Link href="/feedback">trang góp ý</Link>. Khi báo lỗi, hãy ghi
-          ứng dụng liên quan, các bước tái hiện, kết quả mong đợi và điều thực tế đã xảy ra.
-          Với dự án có liên kết GitHub, bạn có thể mở repository từ trang giới thiệu
-          để tìm hiểu mã nguồn.
-        </p>
-        <p>
-          Các project có thể thay đổi trong quá trình phát triển. Góp ý từ người dùng
-          giúp nhóm biết điều gì hữu ích và điều gì cần làm tốt hơn.
-        </p>
-        <Link className="button button-primary" href="/">Khám phá ứng dụng LAZTAR</Link>
-      </article>
-    </section>
+    <PlaygroundMotion>
+      <section className="about-page">
+        <StructuredData
+          data={{
+            "@context": "https://schema.org",
+            "@type": "AboutPage",
+            "@id": `${site.url}/about#about-page`,
+            url: `${site.url}/about`,
+            name: "LAZTAR Hub là gì?",
+            about: { "@id": `${site.url}/#website` },
+            isPartOf: { "@id": `${site.url}/#website` },
+            publisher: { "@id": `${site.url}/#internal-team` },
+          }}
+        />
+        <article className="shell about-editorial">
+          <header className="about-heading">
+            <p className="eyebrow">LAZTAR Hub / về playground này</p>
+            <h1>
+              Ý tưởng nhỏ.
+              <br />
+              Không gian lớn.
+            </h1>
+            <div className="about-lede">
+              <span aria-hidden="true">✳</span>
+              <p>
+                Chỗ dành cho những thứ team muốn chơi, muốn build, muốn chia sẻ.
+                Kể cả khi chúng vẫn đang là thử nghiệm.
+              </p>
+            </div>
+          </header>
+          <PlaygroundPortrait eager />
+          <section className="about-story" aria-labelledby="about-story-title">
+            <h2 id="about-story-title">
+              Một góc riêng
+              <br />
+              của đội ngũ LAZTAR.
+            </h2>
+            <div>
+              <p>
+                LAZTAR Hub tại laztar.xyz là dự án nội bộ do nhân viên và thành
+                viên{" "}
+                <a className="text-link" href={site.companyUrl}>
+                  LAZTAR
+                </a>{" "}
+                xây dựng. Từ một ván game sau giờ làm, một playlist chung, đến
+                một cách trình bày dữ liệu khác thường.
+              </p>
+              <p>
+                Đây là nơi các project được tìm thấy và dùng cùng nhau. Tìm theo
+                tên, lọc theo nhóm, hoặc chọn một thế giới từ homepage.
+              </p>
+              <p>
+                Hub không thay thế website giới thiệu công ty hay dịch vụ. Thông
+                tin chính thức về doanh nghiệp nằm ở{" "}
+                <a className="text-link" href={site.companyUrl}>
+                  laztar.com
+                </a>
+                .
+              </p>
+            </div>
+          </section>
+          <section
+            className="about-project-index"
+            aria-labelledby="about-project-title"
+          >
+            <div className="about-index-heading">
+              <h2 id="about-project-title">Đang sống ở đây.</h2>
+              <p>{apps.length} project, mỗi cái một nhịp.</p>
+            </div>
+            {apps.map((app) => (
+              <Link
+                href={`/apps/${app.slug}`}
+                key={app.id}
+                className={`about-project-row about-project-${app.icon}`}
+              >
+                <span>{app.category}</span>
+                <div>
+                  <h3>{app.name}</h3>
+                  <p>{app.description}</p>
+                </div>
+                <b aria-hidden="true">↗</b>
+              </Link>
+            ))}
+          </section>
+          <section className="about-join" aria-labelledby="about-join-title">
+            <p className="eyebrow">Còn chỗ cho ý tưởng của bạn</p>
+            <h2 id="about-join-title">
+              Chơi thử.
+              <br />
+              Góp một ý.
+              <br />
+              Build cùng nhau.
+            </h2>
+            <div>
+              <p>
+                Bạn có thể xem danh mục và giới thiệu project ngay trên Hub. Một
+                số ứng dụng có thể yêu cầu quyền truy cập riêng của nhóm hoặc
+                văn phòng.
+              </p>
+              <p>
+                Có bug, đề xuất tính năng hoặc muốn tham gia? Khi góp ý, thêm
+                project liên quan và các bước tái hiện để team hiểu đúng ngữ
+                cảnh. Với app có GitHub, mã nguồn được liên kết ngay trên trang
+                project.
+              </p>
+              <Link className="button button-primary" href="/feedback">
+                Góp vào playground
+              </Link>
+            </div>
+          </section>
+        </article>
+      </section>
+    </PlaygroundMotion>
   );
 }

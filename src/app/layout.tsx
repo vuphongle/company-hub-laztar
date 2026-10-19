@@ -1,12 +1,14 @@
 import type { Metadata, Viewport } from "next";
-import "@fontsource-variable/fredoka";
-import "@fontsource-variable/nunito-sans";
+import "./fonts.css";
 
 import { SiteFooter } from "@/components/site-footer";
 import { SiteHeader } from "@/components/site-header";
 import { site } from "@/config/site";
 
 import "./globals.css";
+import "./playground.css";
+import "./public-pages.css";
+import "./motion-experience.css";
 
 export const metadata: Metadata = {
   metadataBase: new URL(site.url),
@@ -24,7 +26,7 @@ export const metadata: Metadata = {
 export const viewport: Viewport = {
   width: "device-width",
   initialScale: 1,
-  themeColor: "#fffaf0",
+  themeColor: "#18151f",
 };
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
