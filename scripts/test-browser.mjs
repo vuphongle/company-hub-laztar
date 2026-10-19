@@ -3,6 +3,7 @@ import { chromium, expect } from "@playwright/test";
 const baseUrl = process.env.BASE_URL || "http://localhost:3000";
 const browser = await chromium.launch({ headless: true });
 const errors = [];
+const warnings = [];
 
 function contrastRatio(foreground, background) {
   const luminance = (color) => {
@@ -32,6 +33,7 @@ try {
   desktop.on("console", (message) => {
     if (message.type() === "error" && !message.text().includes("WebSocket"))
       errors.push(message.text());
+    if (message.type() === "warning") warnings.push(message.text());
   });
   await desktop.addInitScript(() => {
     window.__introQa = { samples: [], complete: false };
@@ -86,6 +88,9 @@ try {
     .locator(".filter-chips")
     .getByRole("button", { name: "Game", exact: true })
     .click();
+  await expect(
+    desktop.getByRole("group", { name: "Lọc theo category" }),
+  ).toBeVisible();
   const gameCount = await desktop.locator(".app-card").count();
   const externalHref = await desktop
     .getByRole("link", { name: /Mở app Ma Sói/ })
@@ -129,6 +134,11 @@ try {
     viewport: { width: 1440, height: 900 },
   });
   detail.on("pageerror", (error) => errors.push(error.message));
+  detail.on("console", (message) => {
+    if (message.type() === "error" && !message.text().includes("WebSocket"))
+      errors.push(message.text());
+    if (message.type() === "warning") warnings.push(message.text());
+  });
   for (const slug of ["werewolf", "office-jukebox", "statements"]) {
     await detail.goto(`${baseUrl}/apps/${slug}`, {
       waitUntil: "domcontentloaded",
@@ -142,6 +152,29 @@ try {
     await detail.keyboard.press("Enter");
     await expect(theater).toHaveAttribute("aria-pressed", "false");
     await expect(theater).toHaveAccessibleName("Xem gần hơn");
+    for (const button of [
+      detail.locator(".project-open"),
+      detail.locator(".project-feedback .button-primary"),
+    ]) {
+      for (const state of ["default", "hover", "focus"]) {
+        if (state === "hover") await button.hover();
+        if (state === "focus") {
+          await detail.mouse.move(0, 0);
+          await button.focus();
+          await detail.keyboard.press("Shift+Tab");
+          await detail.keyboard.press("Tab");
+        }
+        await detail.waitForTimeout(200);
+        const colors = await button.evaluate((element) => ({
+          foreground: getComputedStyle(element).color,
+          background: getComputedStyle(element).backgroundColor,
+        }));
+        expect(
+          contrastRatio(colors.foreground, colors.background),
+          `${slug} CTA ${state} text contrast`,
+        ).toBeGreaterThanOrEqual(4.5);
+      }
+    }
   }
   await detail.close();
   const desktopLayout = await desktop.evaluate(() => ({
@@ -150,7 +183,7 @@ try {
   }));
 
   const mobile = await browser.newPage({
-    viewport: { width: 390, height: 844 },
+    viewport: { width: 320, height: 844 },
     hasTouch: true,
     reducedMotion: "reduce",
   });
@@ -165,6 +198,43 @@ try {
   await mobile.locator(".app-card-music").scrollIntoViewIfNeeded();
   await expect(mobile.locator(".app-card-music")).toBeVisible();
   await mobile.locator('input[type="search"]').fill("");
+  const mobileOrbit = await mobile.evaluate(async () => {
+    document.querySelector(".principles-section")?.scrollIntoView({
+      block: "center",
+    });
+    await new Promise((resolve) =>
+      requestAnimationFrame(() => requestAnimationFrame(resolve)),
+    );
+    const words = [...document.querySelectorAll(".principles-orbit span")].map(
+      (word) => {
+        const rect = word.getBoundingClientRect();
+        return { left: rect.left, right: rect.right };
+      },
+    );
+    return {
+      words,
+      overlaps: words.some(
+        (word, index) => index > 0 && word.left < words[index - 1].right - 1,
+      ),
+      inViewport: words.every(
+        (word) => word.left >= 0 && word.right <= innerWidth,
+      ),
+    };
+  });
+  const mobileTargets = await mobile.evaluate(() =>
+    [
+      ...document.querySelectorAll(
+        ".primary-nav a, .hero-feedback, .app-card-copy .text-link, .faq-list summary",
+      ),
+    ].map((element) => {
+      const rect = element.getBoundingClientRect();
+      return {
+        text: element.textContent?.trim(),
+        width: rect.width,
+        height: rect.height,
+      };
+    }),
+  );
   const mobileLayout = await mobile.evaluate(() => ({
     scrollWidth: document.documentElement.scrollWidth,
     viewport: window.innerWidth,
@@ -194,6 +264,18 @@ try {
     throw new Error("Desktop horizontal overflow detected");
   if (mobileLayout.scrollWidth !== mobileLayout.viewport)
     throw new Error("Mobile horizontal overflow detected");
+  if (mobileOrbit.overlaps || !mobileOrbit.inViewport)
+    throw new Error(
+      `Mobile PLAY / BUILD / SHARE orbit overlaps or clips: ${JSON.stringify(mobileOrbit)}`,
+    );
+  if (mobileTargets.some(({ width, height }) => width > 0 && height > 0 && (width < 44 || height < 44)))
+    throw new Error(
+      `Mobile interactive target is smaller than 44px: ${JSON.stringify(mobileTargets)}`,
+    );
+  if (warnings.some((warning) => warning.includes("GSAP target")))
+    throw new Error(`GSAP emitted a missing target warning: ${warnings.join("\n")}`);
+  if (await mobile.getByText("↗", { exact: true }).count())
+    throw new Error("Unicode arrow glyph remains in interactive mobile UI");
   if (tabletLayout.scrollWidth !== tabletLayout.viewport)
     throw new Error("Tablet horizontal overflow detected");
   if (!mobileLayout.adminVisible || mobileLayout.cards !== 3)
@@ -214,6 +296,9 @@ try {
         tabletLayout,
         mobileLayout,
         errors,
+        warnings,
+        mobileOrbit,
+        mobileTargets,
       },
       null,
       2,

@@ -3,6 +3,7 @@
 import { usePathname } from "next/navigation";
 import Link from "next/link";
 import Image from "next/image";
+import { ArrowMark } from "@/components/arrow-mark";
 
 export function SiteHeader() {
   const pathname = usePathname();
@@ -28,7 +29,7 @@ export function SiteHeader() {
 
         <nav className="primary-nav" aria-label="Điều hướng chính">
           <Link href="/" aria-current={pathname === "/" ? "page" : undefined}>
-            Projects <span aria-hidden="true">↘</span>
+            Projects <ArrowMark direction="down-right" />
           </Link>
           <Link
             href="/about"
@@ -41,7 +42,7 @@ export function SiteHeader() {
             href="/feedback"
             aria-current={pathname === "/feedback" ? "page" : undefined}
           >
-            Góp ý <span aria-hidden="true">↗</span>
+            Góp ý <ArrowMark />
           </Link>
           <Link
             className="nav-admin"

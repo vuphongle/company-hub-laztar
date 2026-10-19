@@ -6,6 +6,7 @@ import { StructuredData } from "@/components/structured-data";
 import { publicPageMetadata } from "@/config/site";
 import { site } from "@/config/site";
 import { apps } from "@/data/apps";
+import { ArrowMark } from "@/components/arrow-mark";
 
 export const metadata = publicPageMetadata({
   title: "LAZTAR Hub là gì? Dự án nội bộ của đội ngũ LAZTAR",
@@ -96,7 +97,7 @@ export default function AboutPage() {
                   <h3>{app.name}</h3>
                   <p>{app.description}</p>
                 </div>
-                <b aria-hidden="true">↗</b>
+                <b aria-hidden="true"><ArrowMark /></b>
               </Link>
             ))}
           </section>

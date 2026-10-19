@@ -7,6 +7,7 @@ import { PlaygroundMotion } from "@/components/playground-motion";
 import { StructuredData } from "@/components/structured-data";
 import { publicPageMetadata, site } from "@/config/site";
 import { apps } from "@/data/apps";
+import { ArrowMark } from "@/components/arrow-mark";
 
 export const metadata = publicPageMetadata({
   title: site.title,
@@ -80,10 +81,10 @@ export default function HomePage() {
               đang live
             </span>
             <a className="hero-jump" href="#directory-title">
-              Đi vào playground <span aria-hidden="true">↓</span>
+              Đi vào playground <span aria-hidden="true"><ArrowMark direction="down" /></span>
             </a>
             <Link className="hero-feedback" href="/feedback">
-              Ném một idea ↗
+              Ném một idea <ArrowMark />
             </Link>
           </div>
         </div>
@@ -129,13 +130,13 @@ export default function HomePage() {
                 Mở app nhanh. Hiểu nó bằng cách dùng, không cần slide giới
                 thiệu.
               </p>
-              <b>↗</b>
+              <b><ArrowMark /></b>
             </div>
             <div className="principle-row">
               <span>02</span>
               <strong>Build in public</strong>
               <p>Thử nghiệm nhỏ, feedback thật, thay đổi ngay khi còn dễ.</p>
-              <b>↗</b>
+              <b><ArrowMark /></b>
             </div>
             <div className="principle-row">
               <span>03</span>
@@ -143,7 +144,7 @@ export default function HomePage() {
               <p>
                 Một idea hay chỉ có giá trị khi người khác có thể chạm vào nó.
               </p>
-              <b>↗</b>
+              <b><ArrowMark /></b>
             </div>
           </div>
         </div>
@@ -176,7 +177,7 @@ export default function HomePage() {
                 .
               </p>
               <Link className="text-link" href="/about">
-                Câu chuyện của playground ↗
+                Câu chuyện của playground <ArrowMark />
               </Link>
             </div>
           </div>
@@ -246,7 +247,7 @@ export default function HomePage() {
             </p>
           </div>
           <Link className="button button-dark" href="/feedback">
-            Góp một ý <span aria-hidden="true">↗</span>
+            Góp một ý <ArrowMark />
           </Link>
         </div>
         </div>

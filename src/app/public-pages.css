@@ -456,6 +456,12 @@
   display: inline-block;
   margin-top: 1rem;
 }
+
+.home-about-copy > div > .text-link {
+  display: inline-flex;
+  align-items: center;
+  min-height: 2.75rem;
+}
 .faq-section {
   display: grid;
   grid-template-columns: minmax(0, 0.65fr) minmax(0, 1.35fr);
@@ -768,6 +774,7 @@
   padding-bottom: 3rem;
 }
 .footer-brand > a {
+  min-height: 2.75rem;
   display: flex;
   align-items: center;
   gap: 1rem;
@@ -800,6 +807,7 @@
   letter-spacing: 0.1em;
 }
 .footer-main nav a {
+  min-width: 2.75rem;
   min-height: 2.75rem;
   display: inline-flex;
   align-items: center;
@@ -826,6 +834,10 @@
   margin: 0;
 }
 .footer-bottom a {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  min-height: 2.75rem;
   color: var(--color-primary);
 }
 
@@ -860,6 +872,10 @@
   --button-fg: var(--project-bg);
   --button-hover-bg: var(--project-accent);
   --button-hover-fg: var(--project-bg);
+}
+.project-page-receipt .button-primary {
+  --button-fg: #f3db84;
+  --button-hover-fg: #f3db84;
 }
 .project-page-wolf .project-cover :focus-visible,
 .project-page-wolf .project-feedback :focus-visible {

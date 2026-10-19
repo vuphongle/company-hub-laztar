@@ -151,7 +151,7 @@
   font-size: 0.64rem;
   color: var(--world-color);
 }
-.node-caption > span {
+.node-caption > .arrow-mark {
   margin-left: auto;
 }
 .world-node-active .node-caption {
@@ -205,6 +205,7 @@
   margin-right: 0.4rem;
 }
 .hero-jump {
+  min-height: 2.75rem;
   font-weight: 900;
   font-size: 0.84rem;
   color: #fffdf8;
@@ -223,6 +224,9 @@
 }
 .hero-feedback {
   color: #fffdf8;
+  min-height: 2.75rem;
+  display: inline-flex;
+  align-items: center;
 }
 .hero-marquee {
   font-size: 0.9rem;
@@ -1187,7 +1191,7 @@
   .world-node-active .node-caption b {
     color: inherit;
   }
-  .world-node .node-caption > span {
+  .world-node .node-caption > .arrow-mark {
     display: none;
   }
 }

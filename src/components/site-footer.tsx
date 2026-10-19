@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { apps } from "@/data/apps";
+import { ArrowMark } from "@/components/arrow-mark";
 
 export function SiteFooter() {
   return (
@@ -20,7 +21,7 @@ export function SiteFooter() {
           {apps.map((app) => (
             <Link key={app.id} href={`/apps/${app.slug}`}>
               {app.name}
-              <span aria-hidden="true">↗</span>
+              <ArrowMark />
             </Link>
           ))}
         </nav>
@@ -35,7 +36,7 @@ export function SiteFooter() {
         <p>Dự án nội bộ của đội ngũ LAZTAR.</p>
         <p>
           Thông tin công ty & dịch vụ:{" "}
-          <a href="https://laztar.com">laztar.com ↗</a>
+          <a href="https://laztar.com">laztar.com <ArrowMark /></a>
         </p>
       </div>
     </footer>

@@ -77,7 +77,11 @@ export function PlaygroundMotion({ children }: { children: ReactNode }) {
               q(".principles-orbit span").forEach((word, i) =>
                 t.fromTo(
                   word,
-                  { xPercent: i % 2 ? 22 : -22, rotation: i % 2 ? 6 : -6 },
+                  // Keep the opposing word entrances inside the available gap.
+                  {
+                    xPercent: (i % 2 ? 1 : -1) * (mobile ? 4 : 8),
+                    rotation: (i % 2 ? 1 : -1) * (mobile ? 2 : 3),
+                  },
                   { xPercent: 0, rotation: 0, duration: 0.5 },
                   i * 0.2,
                 ),

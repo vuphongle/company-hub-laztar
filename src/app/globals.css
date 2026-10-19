@@ -192,6 +192,7 @@ main {
 }
 
 .brand {
+  min-height: 2.75rem;
   min-width: 0;
   display: inline-flex;
   align-items: center;
@@ -459,6 +460,12 @@ main {
   text-underline-offset: 3px;
 }
 
+.arrow-mark {
+  display: inline-block;
+  flex-shrink: 0;
+  vertical-align: -0.15em;
+}
+
 .faq-section {
   padding-bottom: clamp(4rem, 8vw, 7rem);
 }
@@ -485,6 +492,8 @@ main {
 }
 
 .faq-list summary {
+  min-height: 2.75rem;
+  padding-block: 0.55rem;
   cursor: pointer;
   font-size: 1.05rem;
   font-family: var(--font-body);
@@ -866,7 +875,7 @@ main {
   flex-shrink: 0;
   object-fit: contain;
 }
-.primary-nav a span {
+.primary-nav a .arrow-mark {
   color: var(--color-primary);
 }
 .primary-nav .nav-admin {
@@ -1046,6 +1055,9 @@ main {
   color: #4d464d;
 }
 .app-card-copy .text-link {
+  display: inline-flex;
+  align-items: center;
+  min-height: 2.75rem;
   color: var(--color-ink);
   font-size: 0.84rem;
 }
@@ -1265,6 +1277,12 @@ main {
 .breadcrumbs {
   margin-bottom: 2rem;
   color: var(--color-muted);
+}
+
+.breadcrumbs a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 2.75rem;
 }
 
 .page-heading {

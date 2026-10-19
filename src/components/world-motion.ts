@@ -49,13 +49,16 @@ export function useWorldMotion(
                 { x: 0, xPercent: 100, rotation: 8 },
                 { x: 0, xPercent: 0, rotation: 0, duration: 0.46 },
                 0.46,
-              )
-              .fromTo(
-                q(".chapter-word"),
+              );
+            const chapterWord = q(".chapter-word");
+            if (chapterWord.length) {
+              timeline.fromTo(
+                chapterWord,
                 { xPercent: -12, y: 35 },
                 { xPercent: 10, y: -25, duration: 1 },
                 0,
               );
+            }
             if (icon === "wolf") {
               timeline
                 .fromTo(
