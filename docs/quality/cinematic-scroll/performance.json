@@ -1,0 +1,66 @@
+{
+  "conditions": {
+    "baseline": "a96acc8824896c91fe33913dcb4f29999dfd503e",
+    "runtime": "production Next.js / Chromium headless / same local machine",
+    "scroll": "22 CSS px each requestAnimationFrame",
+    "throttling": "none",
+    "recordingDuringMeasurement": false,
+    "sampleRunsPerViewport": 1
+  },
+  "viewports": [
+    {
+      "name": "desktop",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "before": {
+        "frames": 458,
+        "p50": 16.699999999999818,
+        "p95": 16.700000000000728,
+        "over50ms": 0,
+        "cls": 0.02050636245874057,
+        "longTasks": [],
+        "transferredBytes": 1337671
+      },
+      "after": {
+        "frames": 485,
+        "p50": 16.699999999999818,
+        "p95": 16.700000000000728,
+        "over50ms": 0,
+        "cls": 0.021516959166559498,
+        "longTasks": [],
+        "transferredBytes": 1339785
+      },
+      "scrollHeightBefore": 10976,
+      "scrollHeightAfter": 11552
+    },
+    {
+      "name": "mobile",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "before": {
+        "frames": 417,
+        "p50": 16.699999999999818,
+        "p95": 16.799999999999272,
+        "over50ms": 0,
+        "cls": 0.010235622689346687,
+        "longTasks": [],
+        "transferredBytes": 678857
+      },
+      "after": {
+        "frames": 423,
+        "p50": 16.699999999999818,
+        "p95": 16.700000000000728,
+        "over50ms": 0,
+        "cls": 0.010235622689346687,
+        "longTasks": [],
+        "transferredBytes": 680973
+      },
+      "scrollHeightBefore": 10014,
+      "scrollHeightAfter": 10141
+    }
+  ]
+}

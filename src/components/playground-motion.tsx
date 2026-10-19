@@ -39,6 +39,7 @@ export function PlaygroundMotion({ children }: { children: ReactNode }) {
           {
             motion: "(prefers-reduced-motion: no-preference)",
             mobile: "(max-width: 760px)",
+            tall: "(min-height: 741px)",
           },
           ({ conditions }) => {
             if (!conditions?.motion) return;
@@ -55,6 +56,13 @@ export function PlaygroundMotion({ children }: { children: ReactNode }) {
                 defaults: { ease: "none" },
               });
               t.to(q(".hero-copy"), { y: mobile ? -45 : -120, duration: 1 }, 0)
+                .to(q(".hero-scene"), {
+                  rotationX: mobile ? 12 : 24,
+                  rotationY: mobile ? 0 : -9,
+                  transformPerspective: 1200,
+                  scale: mobile ? 0.9 : 0.82,
+                  duration: 1,
+                }, 0)
                 .to(
                   q(".world-nodes"),
                   {
@@ -71,6 +79,49 @@ export function PlaygroundMotion({ children }: { children: ReactNode }) {
                   { scale: 1.6, rotation: 40, duration: 1 },
                   0,
                 );
+            }
+            const gateway = root.querySelector(".gateway-runway");
+            if (gateway && conditions.tall) {
+              const t = gsap.timeline({
+                defaults: { ease: "none" },
+                scrollTrigger: {
+                  trigger: gateway,
+                  start: "top top",
+                  end: "bottom bottom",
+                  scrub: true,
+                  invalidateOnRefresh: true,
+                },
+              });
+              t.fromTo(
+                q(".gateway-heading span:first-child"),
+                { xPercent: -18, opacity: 1 },
+                { xPercent: -62, opacity: 0, duration: 0.45 },
+                0,
+              )
+                .fromTo(
+                  q(".gateway-heading span:last-child"),
+                  { xPercent: 18, opacity: 0 },
+                  { xPercent: 0, opacity: 1, duration: 0.55 },
+                  0.35,
+                )
+                .fromTo(
+                  q(".gateway-worlds .journey-plane"),
+                  {
+                    z: mobile ? -80 : -220,
+                    rotateY: (i: number) => (i - 1) * (mobile ? 10 : 18),
+                    scale: mobile ? 0.84 : 0.68,
+                  },
+                  {
+                    x: (i: number) => (i - 1) * (mobile ? 72 : 190),
+                    z: 80,
+                    rotateY: 0,
+                    rotateZ: 0,
+                    scale: mobile ? 1.22 : 1.5,
+                    duration: 0.8,
+                  },
+                  0,
+                )
+                .to(q(".gateway-caption"), { y: mobile ? -18 : -32, opacity: 0.3, duration: 0.35 }, 0.55);
             }
             const principles = root.querySelector(".principles-section");
             if (principles) {
@@ -149,24 +200,34 @@ export function PlaygroundMotion({ children }: { children: ReactNode }) {
                   scrub: true,
                 },
               });
-              q(".closing-orbit i").forEach((piece, i) =>
+              q(".closing-worlds .journey-plane").forEach((piece, i) =>
                 t.fromTo(
                   piece,
                   {
                     x: (i - 1) * (mobile ? 110 : 330),
                     y: (i % 2 ? -1 : 1) * 180,
-                    rotation: i * 80,
+                    rotation: i * 80 - 30,
                     scale: 1.6,
                   },
-                  { x: 0, y: 0, rotation: 0, scale: 0.25, duration: 1 },
+                  { x: (i - 1) * (mobile ? 55 : 115), y: i % 2 ? -18 : 8, rotation: (i - 1) * 14, scale: 0.88, duration: 1 },
                   0,
                 ),
               );
               t.fromTo(
-                q(".closing-orbit > span"),
+                q(".closing-spark"),
                 { scale: 0.1, rotation: -150 },
                 { scale: 1, rotation: 0, duration: 0.6 },
                 0.4,
+              ).fromTo(
+                q(".closing-type span:first-child"),
+                { xPercent: -18, opacity: 0.2 },
+                { xPercent: 0, opacity: 1, duration: 0.8 },
+                0.15,
+              ).fromTo(
+                q(".closing-type span:last-child"),
+                { xPercent: 18, opacity: 0.2 },
+                { xPercent: 0, opacity: 1, duration: 0.8 },
+                0.25,
               ).fromTo(
                 q(".feedback-cta-card h2"),
                 { y: 65 },

@@ -1,0 +1,96 @@
+/* Native sticky stages. Transform only scene children, never scroll containers or links. */
+.gateway-runway {
+  height: 145svh;
+  background: #19171f;
+  color: #fffdf8;
+  position: relative;
+  overflow: clip;
+}
+.gateway-stage {
+  position: sticky;
+  top: var(--hub-header-height, 5rem);
+  height: calc(100svh - var(--hub-header-height, 5rem));
+  min-height: 30rem;
+  overflow: clip;
+  perspective: 1200px;
+  display: grid;
+  place-items: center;
+  isolation: isolate;
+}
+.gateway-heading {
+  position: absolute;
+  inset: 8% 0 auto;
+  text-align: center;
+  font: 650 clamp(3rem, 9vw, 9rem)/1 var(--font-heading);
+  letter-spacing: -.075em;
+  color: #b9f24a;
+}
+.gateway-heading span { display: block; }
+.gateway-worlds, .closing-worlds {
+  position: absolute;
+  inset: 0;
+  perspective: 1200px;
+}
+.journey-plane {
+  position: absolute;
+  width: 32%;
+  aspect-ratio: 3/2;
+  top: 40%;
+  left: 34%;
+  overflow: hidden;
+  border: 1px solid #fff3;
+  background: #302739;
+  transform-origin: center;
+}
+.journey-plane picture, .journey-plane img { width: 100%; height: 100%; display: block; object-fit: cover; }
+.gateway-worlds .journey-plane:first-child { transform: translateX(-85%) rotate(-12deg); }
+.gateway-worlds .journey-plane:last-child { transform: translateX(85%) rotate(12deg); }
+.gateway-caption { position: absolute; bottom: 5%; margin: 0 1rem; text-align: center; font-size: .85rem; color: #fffdf8; z-index: 4; }
+.playground-experience .app-grid { gap: 0; }
+.playground-experience .chapter-runway { height: 160svh; }
+.playground-experience .chapter-runway + .chapter-runway { margin-top: -18svh; }
+.playground-experience .chapter-runway .app-card { transform-origin: 50% 85%; }
+.playground-experience .chapter-visual { perspective: 1100px; }
+.closing-orbit { height: clamp(16rem, 32vw, 28rem); overflow: clip; }
+.closing-type {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font: 650 clamp(4rem, 12vw, 12rem)/.95 var(--font-heading);
+  letter-spacing: -.09em;
+  color: #302739;
+}
+.closing-type span { display: block; }
+.closing-worlds .journey-plane { width: 23%; left: 38.5%; top: 25%; }
+.closing-worlds .journey-plane:first-child { transform: translateX(-80%) rotate(-14deg); }
+.closing-worlds .journey-plane:last-child { transform: translateX(80%) rotate(14deg); }
+.closing-orbit > .closing-spark { position: absolute; bottom: 4%; font-size: 4rem; }
+@media (max-width: 760px) {
+  .gateway-runway { height: 112svh; }
+  .gateway-stage { min-height: 24rem; }
+  .gateway-heading { top: 12%; font-size: clamp(2.6rem, 12vw, 5rem); }
+  .gateway-worlds .journey-plane { width: 64%; left: 18%; top: 42%; }
+  .gateway-worlds .journey-plane:first-child { transform: translate(-30%, -20%) rotate(-16deg); }
+  .gateway-worlds .journey-plane:last-child { transform: translate(30%, 20%) rotate(16deg); }
+  .gateway-caption { font-size: .73rem; max-width: 28ch; bottom: 6%; }
+  .playground-experience .chapter-runway { height: 132svh; }
+  .playground-experience .chapter-runway + .chapter-runway { margin-top: -10svh; }
+  .closing-orbit { height: 21rem; }
+  .closing-type { flex-direction: column; justify-content: space-between; padding-block: 1rem; font-size: clamp(4.2rem, 20vw, 7rem); }
+  .closing-worlds .journey-plane { width: 40%; left: 30%; top: 33%; }
+  .closing-orbit > .closing-spark { bottom: 41%; font-size: 3rem; }
+  .playground-experience .feedback-cta { height: 132svh; }
+}
+@media (max-height: 740px), (prefers-reduced-motion: reduce) {
+  .gateway-runway { height: auto; }
+  .gateway-stage { position: relative; top: auto; height: 36rem; min-height: 0; }
+  .playground-experience .chapter-runway { height: auto; }
+  .playground-experience .chapter-runway + .chapter-runway { margin-top: 0; }
+  .playground-experience .feedback-cta { height: auto; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .gateway-stage { height: 32rem; }
+  .closing-type { opacity: .18; }
+}
