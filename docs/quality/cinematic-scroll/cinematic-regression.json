@@ -1,0 +1,95 @@
+{
+  "checks": [
+    {
+      "engine": "chromium",
+      "width": 320,
+      "height": 844,
+      "reverse": true,
+      "midpageRefresh": true,
+      "reducedMotion": true,
+      "resize": true
+    },
+    {
+      "engine": "chromium",
+      "width": 390,
+      "height": 844,
+      "reverse": true,
+      "midpageRefresh": true,
+      "reducedMotion": true,
+      "resize": true
+    },
+    {
+      "engine": "chromium",
+      "width": 768,
+      "height": 900,
+      "reverse": true,
+      "midpageRefresh": true,
+      "reducedMotion": true,
+      "resize": true
+    },
+    {
+      "engine": "chromium",
+      "width": 1440,
+      "height": 900,
+      "reverse": true,
+      "midpageRefresh": true,
+      "reducedMotion": true,
+      "resize": true
+    },
+    {
+      "engine": "chromium",
+      "width": 844,
+      "height": 390,
+      "reverse": true,
+      "midpageRefresh": true,
+      "reducedMotion": true,
+      "resize": true
+    },
+    {
+      "engine": "webkit",
+      "width": 320,
+      "height": 844,
+      "reverse": true,
+      "midpageRefresh": true,
+      "reducedMotion": true,
+      "resize": true
+    },
+    {
+      "engine": "webkit",
+      "width": 390,
+      "height": 844,
+      "reverse": true,
+      "midpageRefresh": true,
+      "reducedMotion": true,
+      "resize": true
+    },
+    {
+      "engine": "webkit",
+      "width": 768,
+      "height": 900,
+      "reverse": true,
+      "midpageRefresh": true,
+      "reducedMotion": true,
+      "resize": true
+    },
+    {
+      "engine": "webkit",
+      "width": 1440,
+      "height": 900,
+      "reverse": true,
+      "midpageRefresh": true,
+      "reducedMotion": true,
+      "resize": true
+    },
+    {
+      "engine": "webkit",
+      "width": 844,
+      "height": 390,
+      "reverse": true,
+      "midpageRefresh": true,
+      "reducedMotion": true,
+      "resize": true
+    }
+  ],
+  "errors": []
+}

@@ -22,8 +22,11 @@ export function useWorldMotion(
         if (!runway) return;
         const media = gsap.matchMedia();
         media.add(
-          "(prefers-reduced-motion: no-preference)",
-          () => {
+          { motion: "(prefers-reduced-motion: no-preference)", mobile: "(max-width: 760px)" },
+          ({ conditions }) => {
+            if (!conditions?.motion) return;
+            const mobile = conditions.mobile;
+            const chapter = runway.classList.contains("chapter-runway");
             const scene = root.querySelector(".project-world");
             if (!scene) return;
             const q = gsap.utils.selector(root);
@@ -40,16 +43,38 @@ export function useWorldMotion(
             timeline
               .fromTo(
                 q(".scene-wide"),
-                { scale: 0.88, rotation: -5, yPercent: 12 },
-                { scale: 1.07, rotation: 0, yPercent: -5, duration: 0.55 },
+                { scale: 0.88, rotation: chapter && icon === "music" ? -12 : -5, yPercent: 12 },
+                { scale: chapter ? 1.18 : 1.07, rotation: 0, yPercent: -5, duration: 0.55 },
                 0,
               )
               .fromTo(
                 q(".scene-macro"),
-                { x: 0, xPercent: 100, rotation: 8 },
-                { x: 0, xPercent: 0, rotation: 0, duration: 0.46 },
+                chapter && icon === "wolf"
+                  ? { x: 0, xPercent: 0, clipPath: "circle(0% at 78% 22%)", scale: 1.25 }
+                  : chapter && icon === "receipt"
+                    ? { x: 0, xPercent: 0, yPercent: 100, rotation: 0 }
+                    : { x: 0, xPercent: 100, rotation: chapter ? 24 : 8 },
+                { x: 0, xPercent: 0, yPercent: 0, clipPath: "circle(150% at 78% 22%)", scale: 1, rotation: 0, duration: 0.46 },
                 0.46,
               );
+            // Let the next world take the foreground while this chapter recedes.
+            // Owned here so search/filter remounts get a fresh scoped timeline too.
+            if (chapter) {
+              gsap.to(root, {
+                scale: mobile ? 0.94 : 0.86,
+                rotationX: mobile ? -3 : -7,
+                transformPerspective: 1200,
+                y: mobile ? -18 : -45,
+                ease: "none",
+                scrollTrigger: {
+                  trigger: runway,
+                  start: "bottom 105%",
+                  end: "bottom 15%",
+                  scrub: true,
+                  invalidateOnRefresh: true,
+                },
+              });
+            }
             const chapterWord = q(".chapter-word");
             if (chapterWord.length) {
               timeline.fromTo(

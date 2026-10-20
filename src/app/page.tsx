@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { WorldTriptych } from "@/components/world-triptych";
 
 import { AppDirectory } from "@/components/app-directory";
 import { PlaygroundPortrait } from "@/components/playground-portrait";
@@ -103,6 +104,14 @@ export default function HomePage() {
               </span>
             ))}
           </div>
+        </div>
+      </section>
+
+      <section className="gateway-runway" aria-label="Đi vào ba thế giới">
+        <div className="gateway-stage">
+          <div className="gateway-heading" aria-hidden="true"><span>SMALL IDEAS.</span><span>THREE WORLDS.</span></div>
+          <WorldTriptych className="gateway-worlds" />
+          <p className="gateway-caption">Một playground. Ba thế giới. Vô số điều để thử.</p>
         </div>
       </section>
 
@@ -238,7 +247,11 @@ export default function HomePage() {
 
       <section className="feedback-cta">
         <div className="closing-stage shell">
-        <div className="closing-orbit" aria-hidden="true"><i /><i /><i /><span>✳</span></div>
+        <div className="closing-orbit" aria-hidden="true">
+          <div className="closing-type"><span>YOUR</span><span>TURN.</span></div>
+          <WorldTriptych className="closing-worlds" />
+          <span className="closing-spark">✳</span>
+        </div>
         <div className="feedback-cta-card">
           <div>
             <p className="eyebrow">Cùng làm cho Hub hay hơn</p>
