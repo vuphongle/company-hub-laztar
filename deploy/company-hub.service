@@ -1,0 +1,29 @@
+[Unit]
+Description=LAZTAR Company Hub
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+User=company-hub
+Group=company-hub
+WorkingDirectory=/opt/company-hub
+EnvironmentFile=/etc/company-hub.env
+ExecStartPre=/usr/local/libexec/company-hub-prepare
+ExecStart=/usr/bin/node scripts/run-next.mjs start --hostname 127.0.0.1
+Restart=on-failure
+RestartSec=5
+TimeoutStartSec=15min
+TimeoutStopSec=30
+UMask=0077
+StateDirectory=company-hub
+StateDirectoryMode=0750
+NoNewPrivileges=true
+PrivateTmp=true
+ProtectHome=true
+ProtectSystem=strict
+ReadWritePaths=/var/lib/company-hub /opt/company-hub
+SyslogIdentifier=company-hub
+
+[Install]
+WantedBy=multi-user.target

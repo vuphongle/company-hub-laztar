@@ -128,6 +128,47 @@ Không hard-code port hoặc database path trong source, nên cùng VPS có th�
 Build cần TypeScript và các dependency phát triển kể cả khi môi trường đặt
 `NODE_ENV=production`, vì vậy bước cài đặt production dùng `--include=dev`.
 
+### Production trên VPS hiện tại
+
+`company-hub.service` chạy trực tiếp tại Git checkout `/opt/company-hub`, nhánh
+`main`, với cấu hình `/etc/company-hub.env`. Database giữ tại
+`/var/lib/company-hub/company-hub.db`, ngoài checkout.
+
+Sau khi code mới đã được push/merge vào `main`, cập nhật production bằng một lệnh:
+
+```bash
+sudo systemctl restart company-hub
+```
+
+Mỗi lần start/restart, service tự chạy `git pull --ff-only origin main`,
+`npm ci --include=dev`, build mới và migration, rồi khởi động Next.js.
+Không cần build thủ công, tạo release, đổi symlink, backup hay rollback.
+Website tạm ngừng trong lúc cài dependency và build. Nếu pull/build/migrate lỗi,
+service báo lỗi và không chạy lại build cũ.
+
+Không sửa file được Git quản lý trong checkout production; script sẽ dừng nếu có
+thay đổi chưa commit hoặc checkout không ở nhánh `main`. Code chưa push lên
+`origin/main` sẽ không được deploy.
+
+Kiểm tra runtime và commit đã build:
+
+```bash
+sudo systemctl status company-hub --no-pager
+sudo journalctl -u company-hub -n 80 --no-pager
+sudo cat /opt/company-hub/.next/DEPLOYED_COMMIT
+```
+
+Unit mẫu nằm ở `deploy/company-hub.service`. Script chuẩn bị được cài riêng tại
+`/usr/local/libexec/company-hub-prepare` để không bị thay thế giữa lúc pull code.
+Khi thay đổi script/unit, cài lại từ repository:
+
+```bash
+sudo install -D -m 0755 scripts/prepare-production.sh /usr/local/libexec/company-hub-prepare
+sudo install -m 0644 deploy/company-hub.service /etc/systemd/system/company-hub.service
+sudo systemctl daemon-reload
+sudo systemctl restart company-hub
+```
+
 ## Thêm app mới
 
 Mở `src/data/apps.ts` và thêm một object vào mảng `apps`:
